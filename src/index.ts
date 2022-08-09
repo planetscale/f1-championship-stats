@@ -22,7 +22,16 @@ export default {
 				headers: {'Content-Type': 'text/html'}
 			})
 		} else if (pathname === '/data.json') {
-			return new Response("data", {
+			const conn = await connect(config)
+			const data = await conn.execute('SELECT round, teamId, position, points FROM constructor_standings where season = ?', [2022])
+			const json = JSON.stringify(data.rows)
+
+			return new Response(json, {
+				headers: {'Content-Type': 'application/json;charset=UTF-8', 'Access-Control-Allow-Origin': '*'}
+			})
+		} else {
+			return new Response("Not Found", {
+				status: 404,
 				headers: {'Content-Type': 'text/html'}
 			})
 		}
