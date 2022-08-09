@@ -39,7 +39,7 @@ export default {
 
 		if (resp.MRData.StandingsTable.StandingsLists.length > 0) {
 			resp.MRData.StandingsTable.StandingsLists[0].ConstructorStandings.forEach(async (standing) => {
-				await conn.execute(`INSERT INTO constructor_standings (season, round, teamId, position, wins, points) values (${season}, ${round}, '${standing.Constructor.constructorId}', ${standing.position}, ${standing.wins}, ${standing.points})`)
+				await conn.execute(`INSERT INTO constructor_standings (season, round, teamId, position, wins, points) values (${currentYear}, ${nextRound}, '${standing.Constructor.constructorId}', ${standing.position}, ${standing.wins}, ${standing.points})`)
 			})
 		}
 	},
