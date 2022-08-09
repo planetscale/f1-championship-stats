@@ -1,7 +1,5 @@
 import { connect } from '@planetscale/database'
 
-// const edge = new Client({ username: '3am0d4n5iphbtckvthwm', password: 'pscale_pw_34w3GIrFwKMXoHED5MyU3ibDFIoxztR6re4AooU0t5b', host: 'us-east.connect.psdb.cloud' })
-
 const config = {
   host: 'aws.connect.psdb.cloud',
   username: '3am0d4n5iphbtckvthwm',
