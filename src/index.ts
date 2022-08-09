@@ -14,12 +14,18 @@ export default {
 		env: Env,
 		ctx: ExecutionContext
 	): Promise<Response> {
-		// TODO:
-		// - if request.url.pathname === '/', return the html page showing the graph
-		// - if request.url.pathname === '/data.json', return the data for the graph in JSON
-		return new Response("hi mike", {
-			headers: {'Content-Type': 'text/html'}
-		})
+		const url = new URL(request.url);
+		const pathname = url.pathname;
+
+		if (pathname === '/') {
+			return new Response("index", {
+				headers: {'Content-Type': 'text/html'}
+			})
+		} else if (pathname === '/data.json') {
+			return new Response("data", {
+				headers: {'Content-Type': 'text/html'}
+			})
+		}
 	},
 
 	// Grabs latest F1 standings from the API and writes them to the database.
