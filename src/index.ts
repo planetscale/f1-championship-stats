@@ -43,7 +43,7 @@ export default {
 					'INSERT INTO constructor_standings (season, round, teamId, position, wins, points) values (?, ?, ?, ?, ?, ?)',
 					[currentYear, nextRound, standing.Constructor.constructorId, standing.position, standing.wins, standing.points]
 				)
-			}
+			})
 		}
 	},
 }
