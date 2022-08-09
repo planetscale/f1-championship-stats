@@ -30,7 +30,7 @@ export default {
 	): Promise<void> {
 		const currentYear = 2022
 		const conn = await connect(config)
-		const latestRoundResp = await conn.execute(`select max(round) as max from constructor_standings where season = 2022;`)
+		const latestRoundResp = await conn.execute('select max(round) as max from constructor_standings where season = ?', [currentYear])
 		const latestRound = latestRoundResp.rows[0].max
 		const nextRound = latestRound + 1
 
@@ -39,7 +39,10 @@ export default {
 
 		if (resp.MRData.StandingsTable.StandingsLists.length > 0) {
 			resp.MRData.StandingsTable.StandingsLists[0].ConstructorStandings.forEach(async (standing) => {
-				await conn.execute(`INSERT INTO constructor_standings (season, round, teamId, position, wins, points) values (${currentYear}, ${nextRound}, '${standing.Constructor.constructorId}', ${standing.position}, ${standing.wins}, ${standing.points})`)
+				await conn.execute(
+					'INSERT INTO constructor_standings (season, round, teamId, position, wins, points) values (?, ?, ?, ?, ?, ?)',
+					[currentYear, nextRound, standing.Constructor.constructorId, standing.position, standing.wins, standing.points]
+				)
 			})
 		}
 	},
@@ -54,4 +57,3 @@ async function getJSON(url: string) {
 	const response = await fetch(url, init)
 	return JSON.parse(JSON.stringify(await response.json()))
 }
-
