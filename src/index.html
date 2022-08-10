@@ -1,21 +1,26 @@
 <html>
   <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js" integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"
+      integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
   </head>
   <body>
-    <div style="width:800px;height:800px;">
+    <div style="width: 800px; height: 800px">
       <canvas id="myChart" width="400" height="400"></canvas>
       <script>
-        const dataRequest = new Request('/data.json');
+        const dataRequest = new Request("/data.json");
 
         fetch(dataRequest)
           .then((response) => response.json())
           .then((data) => {
-            const ctx = document.getElementById('myChart');
-            const raceNames = [...new Set(data.map(item => item.race_name))];
+            const ctx = document.getElementById("myChart");
+            const raceNames = [...new Set(data.map((item) => item.race_name))];
             // Group data by team
             const teams = {};
-            data.forEach(item => {
+            data.forEach((item) => {
               if (!teams[item.teamId]) {
                 teams[item.teamId] = { points: [] };
               }
@@ -28,13 +33,14 @@
               datasets.push({
                 label: data.teamName,
                 data: data.points,
-                borderColor: '#' + Math.floor(Math.random() * 16777215).toString(16),
+                borderColor:
+                  "#" + Math.floor(Math.random() * 16777215).toString(16),
                 fill: false,
               });
             }
 
             const myChart = new Chart(ctx, {
-              type: 'line',
+              type: "line",
               data: {
                 labels: raceNames,
                 datasets: datasets,
@@ -42,10 +48,10 @@
               options: {
                 scales: {
                   y: {
-                    beginAtZero: true
-                  }
-                }
-              }
+                    beginAtZero: true,
+                  },
+                },
+              },
             });
           })
           .catch(console.error);
