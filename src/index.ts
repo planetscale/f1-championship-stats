@@ -54,11 +54,16 @@ export default {
     const currentYear = 2022
     const conn = await connect(config)
 
+    // Update or create team information
     const teams = await getJSON('https://ergast.com/api/f1/' + currentYear + '/constructors.json')
-
     for (const team of teams.MRData.ConstructorTable.Constructors) {
-      // update or create the database with team data
       await conn.execute('INSERT INTO constructor_teams (id, name, nationality, url) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = ?', [team.constructorId, team.name, team.nationality, team.url, team.constructorId])
+    }
+
+    // Update or create race information
+    const races = await getJSON('https://ergast.com/api/f1/' + currentYear + '.json')
+    for (const race of races.MRData.RaceTable.Races) {
+      await conn.execute('INSERT INTO constructor_races (season, round, race_name) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE season = ?, round = ?, race_name = ?', [race.season, race.round, race.raceName, race.season, race.round, race.raceName])
     }
 
     const latestRoundResp = await conn.execute('select max(round) as max from constructor_standings where season = ?', [currentYear])
