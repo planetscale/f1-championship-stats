@@ -29,7 +29,7 @@ export default {
         headers: { "Content-Type": "text/html" },
       });
     } else if (pathname === "/data.json") {
-      const conn = await connect(config);
+      const conn = connect(config);
       const data = await conn.execute(
         "SELECT constructor_standings.round, race_name, teamId, name, nationality, url, position, points FROM constructor_standings JOIN constructor_teams ON constructor_standings.teamId = constructor_teams.id JOIN constructor_races on (constructor_standings.season = constructor_races.season AND constructor_standings.round = constructor_races.round) where constructor_standings.season = ? order by constructor_standings.round",
         [currentYear]
@@ -62,7 +62,7 @@ export default {
       password: env.PSCALE_PASSWORD,
     };
 
-    const conn = await connect(config);
+    const conn = connect(config);
 
     // Update or create team information
     const teams = await getJSON(
