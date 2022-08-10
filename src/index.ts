@@ -19,7 +19,7 @@ export default {
     const pathname = url.pathname;
 
     const config = {
-      host: "aws.connect.psdb.cloud",
+      host: env.PSCALE_HOST,
       username: env.PSCALE_USERNAME,
       password: env.PSCALE_PASSWORD,
     };
@@ -57,7 +57,7 @@ export default {
     ctx: ExecutionContext
   ): Promise<void> {
     const config = {
-      host: "aws.connect.psdb.cloud",
+      host: env.PSCALE_HOST,
       username: env.PSCALE_USERNAME,
       password: env.PSCALE_PASSWORD,
     };

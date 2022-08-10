@@ -8,4 +8,5 @@ crons = [ "0 */1 * * SUN" ]
 # The necessary secrets are:
 # - PSCALE_USERNAME
 # - PSCALE_PASSWORD
-# Run `wrangler secret put <NAME>` for each of these
+# - PSCALE_HOST
+# Run `echo <VALUE> | wrangler secret put <NAME>` for each of these
