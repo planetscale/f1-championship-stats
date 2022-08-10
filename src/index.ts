@@ -25,7 +25,7 @@ export default {
       })
     } else if (pathname === '/data.json') {
       const conn = await connect(config)
-      const data = await conn.execute('SELECT round, teamId, name, nationality, url, position, points FROM constructor_standings JOIN constructor_teams on constructor_standings.teamId = constructor_teams.id where season = ?', [2022])
+      const data = await conn.execute('SELECT constructor_standings.round, race_name, teamId, name, nationality, url, position, points FROM constructor_standings JOIN constructor_teams on constructor_standings.teamId = constructor_teams.id JOIN constructor_races on (constructor_standings.season = constructor_races.season AND constructor_standings.round = constructor_races.round) where constructor_standings.season = ? order by constructor_standings.round', [2022])
       const json = JSON.stringify(data.rows)
 
       return new Response(json, {
