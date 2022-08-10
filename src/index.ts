@@ -1,6 +1,6 @@
 import { connect } from '@planetscale/database'
 
-import html from "/index.html"
+import html from "./index.html"
 
 const config = {
   host: 'aws.connect.psdb.cloud',
