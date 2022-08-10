@@ -3,6 +3,7 @@ import { connect } from "@planetscale/database";
 import html from "./index.html";
 
 export interface Env {
+  PSCALE_HOST: string;
   PSCALE_USERNAME: string;
   PSCALE_PASSWORD: string;
 }
