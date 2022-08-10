@@ -12,7 +12,7 @@
           .then((response) => response.json())
           .then((data) => {
             const ctx = document.getElementById('myChart');
-            const rounds = [...new Set(data.map(item => item.round))];
+            const raceNames = [...new Set(data.map(item => item.race_name))];
             // Group data by team
             const teams = {};
             data.forEach(item => {
@@ -36,7 +36,7 @@
             const myChart = new Chart(ctx, {
               type: 'line',
               data: {
-                labels: rounds,
+                labels: raceNames,
                 datasets: datasets,
               },
               options: {
