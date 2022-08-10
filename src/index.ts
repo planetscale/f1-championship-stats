@@ -1,5 +1,7 @@
 import { connect } from '@planetscale/database'
 
+import html from "/index.html"
+
 const config = {
   host: 'aws.connect.psdb.cloud',
   username: '3am0d4n5iphbtckvthwm',
@@ -18,7 +20,7 @@ export default {
 		const pathname = url.pathname;
 
 		if (pathname === '/') {
-			return new Response("index", {
+			return new Response(html, {
 				headers: {'Content-Type': 'text/html'}
 			})
 		} else if (pathname === '/data.json') {
