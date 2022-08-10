@@ -13,6 +13,19 @@
       <script>
         const dataRequest = new Request("/data.json");
 
+        const teamColor = {
+          alfa: '#A32F3C',
+          alphatauri: '#587B98',
+          alpine: '#4891CC',
+          aston_martin: '#46806E',
+          ferrari: '#ED1D25',
+          haas: '#B7B9BC',
+          mclaren: '#E6863B',
+          mercedes: '#6BD4BF',
+          red_bull: '#2F5ABF',
+          williams: '#63BBD9',
+        }
+
         fetch(dataRequest)
           .then((response) => response.json())
           .then((data) => {
@@ -33,9 +46,12 @@
               datasets.push({
                 label: data.teamName,
                 data: data.points,
-                borderColor:
-                  "#" + Math.floor(Math.random() * 16777215).toString(16),
                 fill: false,
+                borderWidth: 2,
+                borderColor: teamColor[key],
+                backgroundColor: teamColor[key],
+                pointBorderColor: '#FFFFFF',
+                pointBorderWidth: 2
               });
             }
 
