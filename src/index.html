@@ -31,7 +31,7 @@
           .then((data) => {
             const ctx = document.getElementById("myChart");
             const standings = data.standings
-            const raceNames = [...new Set(standings.map((item) => item.race_name))];
+            const raceNames = [...new Set(data.races.map((item) => item.race_name))];
             // Group data by team
             const teams = {};
             standings.forEach((item) => {
