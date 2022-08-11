@@ -30,10 +30,11 @@
           .then((response) => response.json())
           .then((data) => {
             const ctx = document.getElementById("myChart");
-            const raceNames = [...new Set(data.map((item) => item.race_name))];
+            const standings = data.standings
+            const raceNames = [...new Set(standings.map((item) => item.race_name))];
             // Group data by team
             const teams = {};
-            data.forEach((item) => {
+            standings.forEach((item) => {
               if (!teams[item.teamId]) {
                 teams[item.teamId] = { points: [] };
               }

@@ -31,11 +31,14 @@ export default {
       });
     } else if (pathname === "/data.json") {
       const conn = connect(config);
-      const data = await conn.execute(
+      const standingsData = await conn.execute(
         "SELECT constructor_standings.round, race_name, teamId, name, nationality, url, position, points FROM constructor_standings JOIN constructor_teams ON constructor_standings.teamId = constructor_teams.id JOIN constructor_races on (constructor_standings.season = constructor_races.season AND constructor_standings.round = constructor_races.round) where constructor_standings.season = ? order by constructor_standings.round",
         [currentYear]
       );
-      const json = JSON.stringify(data.rows);
+      const raceData = await conn.execute('SELECT * FROM constructor_races WHERE season = ?', [currentYear])
+
+      const data = { races: raceData.rows, standings: standingsData.rows }
+      const json = JSON.stringify(data);
 
       return new Response(json, {
         headers: {
@@ -88,14 +91,16 @@ export default {
     );
     for (const race of races.MRData.RaceTable.Races) {
       await conn.execute(
-        "INSERT INTO constructor_races (season, round, race_name) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE season = ?, round = ?, race_name = ?",
+        "INSERT INTO constructor_races (season, round, race_name, date) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE season = ?, round = ?, race_name = ?, date = ?",
         [
           race.season,
           race.round,
           race.raceName,
+          race.date,
           race.season,
           race.round,
           race.raceName,
+          race.date,
         ]
       );
     }
