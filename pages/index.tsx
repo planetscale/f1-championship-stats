@@ -45,7 +45,6 @@ const Home: NextPage = () => {
   if (error) return
 
   let raceNames = []
-  let raceDates = []
   const datasets = []
 
   const constructorColor = {
@@ -86,28 +85,23 @@ const Home: NextPage = () => {
     'Abu Dhabi Grand Prix': 'Yas Marina'
   }
 
+  const f = new Intl.DateTimeFormat('en-us', { month: 'short', day: 'numeric', timeZone: 'UTC' })
+  const raceDates: Array<Record<string, string>> =
+    data?.races.map((item) => {
+      return f.formatToParts(Date.parse(item.date)).reduce((acc, part) => ({ ...acc, [part.type]: part.value }), {})
+    }) ?? []
+
   if (data) {
     raceNames = data.races.map((item) => circuitName[item.race_name])
 
-    data.races.forEach((item) => {
-      const date = item.date
-      const f = Intl.DateTimeFormat('en-us', { month: 'short', day: 'numeric' })
-      const dateString = f.format(Date.parse(date))
-
-      const dateSplit = dateString.split(' ')
-      const dateObj = { month: dateSplit[0], day: Number(dateSplit[1]) + 1 }
-
-      raceDates.push(dateObj)
-    })
-
-    const teams: Record<string, Constructor> = {}
-    data.standings.forEach((item) => {
-      if (!teams[item.teamId]) {
-        teams[item.teamId] = { teamName: item.name, points: [] }
+    const teams: Record<string, Constructor> = data.standings.reduce((acc, item) => {
+      if (!acc[item.teamId]) {
+        acc[item.teamId] = { teamName: item.name, points: [] }
       }
-      teams[item.teamId].teamName = item.name
-      teams[item.teamId].points.push(item.points)
-    })
+      acc[item.teamId].teamName = item.name
+      acc[item.teamId].points.push(item.points)
+      return acc
+    }, {})
 
     for (const [key, team] of Object.entries(teams)) {
       datasets.push({
