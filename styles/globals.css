@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: 'Formula1-Regular';
+  src: url('/fonts/Formula1-Regular.woff2') format('woff2-variations');
+}
+
+@font-face {
+  font-family: 'Formula1-Bold';
+  src: url('/fonts/Formula1-Bold.woff2') format('woff2-variations');
+}
+
+body {
+  @apply antialiased;
+}

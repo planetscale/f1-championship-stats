@@ -122,37 +122,21 @@ module.exports = {
       full: '9999px'
     },
     fontFamily: {
-      sans: [
-        'Inter var',
-        '-apple-system',
-        'BlinkMacSystemFont',
-        'Segoe UI',
-        'Roboto',
-        'Oxygen',
-        'Ubuntu',
-        'Cantarell',
-        'Fira Sans',
-        'Droid Sans',
-        'Helvetica Neue',
-        'sans-serif'
-      ],
-      mono: [
-        'Roboto Mono',
-        'ui-monospace',
-        'SF-Regular',
-        'SF Mono',
-        'Menlo',
-        'Consolas',
-        'Liberation Mono',
-        'monospace'
-      ]
+      sans: ['Formula1-Regular', 'sans-serif']
     },
     fontWeight: {
       normal: 400,
-      medium: 500,
-      semibold: 600
+      bold: 700
     },
     extend: {
+      fontSize: {
+        '3xs': '7px',
+        '2xs': '8px'
+      },
+      gridTemplateColumns: {
+        21: 'repeat(21, minmax(0, 1fr))',
+        22: 'repeat(22, minmax(0, 1fr))'
+      },
       opacity: opacity(),
       spacing: spacing()
     }
