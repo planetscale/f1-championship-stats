@@ -1,7 +1,8 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-
 import useSWR from 'swr'
+import SVG from 'react-inlinesvg'
+
 import LineChart from '@/components/LineChart'
 import StandingsItem from '@/components/StandingsItem'
 
@@ -138,7 +139,7 @@ const Home: NextPage = () => {
       </Head>
 
       <header className='container mx-auto px-6 pt-8 pb-2'>
-        <h1 className='text-2xl'>
+        <h1 className='text-xl md:text-2xl'>
           <span className='block text-[#E20500]'>2022 Formula 1</span>Constructor championship standings
         </h1>
       </header>
@@ -250,6 +251,16 @@ const Home: NextPage = () => {
           </div>
         </div>
       </main>
+
+      <footer className='container mx-auto mt-2 flex items-center justify-between px-6 pb-8'>
+        <a className='flex items-center space-x-1' href='http://www.planetscale.com'>
+          <span>Powered by</span> <SVG src='planetscale.svg' />
+        </a>
+
+        <a className='flex items-center space-x-1' href='http://www.github.com'>
+          <span>View on</span> <SVG src='github-icon.svg' />
+        </a>
+      </footer>
     </>
   )
 }

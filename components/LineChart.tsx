@@ -36,6 +36,9 @@ const LineChart: React.FC<Props> = ({ chartData }) => {
 
   const options = {
     maintainAspectRatio: false,
+    animation: {
+      duration: 0
+    },
     plugins: {
       legend: {
         display: false
