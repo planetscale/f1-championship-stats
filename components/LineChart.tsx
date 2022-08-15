@@ -8,8 +8,7 @@ import {
   LineElement,
   Title,
   Tooltip,
-  Legend,
-  Ticks
+  Legend
 } from 'chart.js'
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend)
@@ -35,6 +34,7 @@ const LineChart: React.FC<Props> = ({ chartData }) => {
   }, [])
 
   const options = {
+    events: [],
     maintainAspectRatio: false,
     animation: {
       duration: 0
