@@ -56,40 +56,35 @@ const Worker = {
 
     const conn = connect(config)
 
-    // Update or create team and race information
-    const [teams, races] = await Promise.all([
+    const [teams, races, nextRound] = await Promise.all([
       getJSON(`https://ergast.com/api/f1/${CURRENT_YEAR}/constructors.json`),
-      getJSON(`https://ergast.com/api/f1/${CURRENT_YEAR}.json`)
+      getJSON(`https://ergast.com/api/f1/${CURRENT_YEAR}.json`),
+      getNextRound(conn)
     ])
 
     await Promise.all(teams.MRData.ConstructorTable.Constructors.map((team: any) => saveTeam(conn, team)))
     await Promise.all(races.MRData.RaceTable.Races.map((race: any) => saveRace(conn, race)))
 
-    const latestRoundResp = await conn.execute('SELECT MAX(round) AS max FROM constructor_standings WHERE season = ?', [
-      CURRENT_YEAR
-    ])
-    const latestRound = Number(latestRoundResp.rows[0]?.max ?? 0)
-    const nextRound = latestRound + 1
-
     // Try to get standings for the next round, if any we write to the DB
     const resp = await getJSON(`https://ergast.com/api/f1/${CURRENT_YEAR}/${nextRound}/constructorStandings.json`)
+    const standings = resp.MRData.StandingsTable.StandingsLists[0]?.ConstructorStandings ?? []
 
-    if (resp.MRData.StandingsTable.StandingsLists.length > 0) {
-      resp.MRData.StandingsTable.StandingsLists[0].ConstructorStandings.forEach(async (standing) => {
-        await conn.execute(
-          'INSERT INTO constructor_standings (season, round, teamId, position, wins, points) VALUES (?, ?, ?, ?, ?, ?)',
-          [
-            CURRENT_YEAR,
-            nextRound,
-            standing.Constructor.constructorId,
-            standing.position,
-            standing.wins,
-            standing.points
-          ]
-        )
-      })
-    }
+    await Promise.all(standings.map((standing: any) => saveStanding(conn, nextRound, standing)))
   }
+}
+
+async function saveStanding(conn: Connection, nextRound: number, standing: any): Promise<ExecutedQuery> {
+  return conn.execute(
+    'INSERT INTO constructor_standings (season, round, teamId, position, wins, points) VALUES (?, ?, ?, ?, ?, ?)',
+    [CURRENT_YEAR, nextRound, standing.Constructor.constructorId, standing.position, standing.wins, standing.points]
+  )
+}
+
+async function getNextRound(conn: Connection): Promise<number> {
+  const result = await conn.execute('SELECT MAX(round) AS max FROM constructor_standings WHERE season = ?', [
+    CURRENT_YEAR
+  ])
+  return Number(result.rows[0]?.max ?? 0) + 1
 }
 
 async function saveTeam(conn: Connection, team: any): Promise<ExecutedQuery> {
