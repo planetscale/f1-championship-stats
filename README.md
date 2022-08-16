@@ -1,4 +1,4 @@
-# F1 Championship Stats
+# F1 Championship Stats 🏎 
 See how your favorite F1 team is progressing in the Constructors Championship. All data served from the Edge.
 
 **Screenshot here**
