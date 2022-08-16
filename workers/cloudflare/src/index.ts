@@ -68,7 +68,7 @@ const Worker = {
     const latestRoundResp = await conn.execute('SELECT MAX(round) AS max FROM constructor_standings WHERE season = ?', [
       currentYear
     ])
-    const latestRound = latestRoundResp.rows[0] ? latestRoundResp.rows[0].max : 0
+    const latestRound = Number(latestRoundResp.rows[0]?.max ?? 0)
     const nextRound = latestRound + 1
 
     // Try to get standings for the next round, if any we write to the DB
