@@ -8,6 +8,7 @@ import StandingsItem from '@/components/StandingsItem'
 
 type RaceData = {
   races: Race[]
+  results: RaceResult[]
   standings: Standing[]
 }
 
@@ -20,6 +21,15 @@ type Race = {
 }
 
 type Standing = {
+  season: number
+  teamId: string
+  name: string
+  position: number
+  points: number
+  wins: number
+}
+
+type RaceResult = {
   name: string
   nationality: string
   points: number
@@ -94,7 +104,7 @@ const Home: NextPage = () => {
   if (data) {
     raceNames = data.races.map((item) => circuitName[item.race_name])
 
-    const teams: Record<string, Constructor> = data.standings.reduce((acc, item) => {
+    const teams: Record<string, Constructor> = data.results.reduce((acc, item) => {
       if (!acc[item.teamId]) {
         acc[item.teamId] = { teamName: item.name, points: [] }
       }
