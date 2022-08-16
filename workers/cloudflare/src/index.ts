@@ -6,7 +6,7 @@ export interface Env {
   PSCALE_PASSWORD: string
 }
 
-const currentYear = 2022
+const CURRENT_YEAR = 2022
 
 const Worker = {
   async fetch(request: Request, env: Env, _ctx: ExecutionContext): Promise<Response> {
@@ -24,9 +24,9 @@ const Worker = {
       const [standingsData, raceData] = await Promise.all([
         conn.execute(
           'SELECT constructor_standings.round, race_name, teamId, name, nationality, url, position, points FROM constructor_standings JOIN constructor_teams ON constructor_standings.teamId = constructor_teams.id JOIN constructor_races on (constructor_standings.season = constructor_races.season AND constructor_standings.round = constructor_races.round) where constructor_standings.season = ? order by constructor_standings.round',
-          [currentYear]
+          [CURRENT_YEAR]
         ),
-        conn.execute('SELECT * FROM constructor_races WHERE season = ?', [currentYear])
+        conn.execute('SELECT * FROM constructor_races WHERE season = ?', [CURRENT_YEAR])
       ])
 
       const data = { races: raceData.rows, standings: standingsData.rows }
@@ -58,28 +58,28 @@ const Worker = {
 
     // Update or create team and race information
     const [teams, races] = await Promise.all([
-      getJSON(`https://ergast.com/api/f1/${currentYear}/constructors.json`),
-      getJSON(`https://ergast.com/api/f1/${currentYear}.json`)
+      getJSON(`https://ergast.com/api/f1/${CURRENT_YEAR}/constructors.json`),
+      getJSON(`https://ergast.com/api/f1/${CURRENT_YEAR}.json`)
     ])
 
     await Promise.all(teams.MRData.ConstructorTable.Constructors.map((team: any) => saveTeam(conn, team)))
     await Promise.all(races.MRData.RaceTable.Races.map((race: any) => saveRace(conn, race)))
 
     const latestRoundResp = await conn.execute('SELECT MAX(round) AS max FROM constructor_standings WHERE season = ?', [
-      currentYear
+      CURRENT_YEAR
     ])
     const latestRound = Number(latestRoundResp.rows[0]?.max ?? 0)
     const nextRound = latestRound + 1
 
     // Try to get standings for the next round, if any we write to the DB
-    const resp = await getJSON(`https://ergast.com/api/f1/${currentYear}/${nextRound}/constructorStandings.json`)
+    const resp = await getJSON(`https://ergast.com/api/f1/${CURRENT_YEAR}/${nextRound}/constructorStandings.json`)
 
     if (resp.MRData.StandingsTable.StandingsLists.length > 0) {
       resp.MRData.StandingsTable.StandingsLists[0].ConstructorStandings.forEach(async (standing) => {
         await conn.execute(
           'INSERT INTO constructor_standings (season, round, teamId, position, wins, points) VALUES (?, ?, ?, ?, ?, ?)',
           [
-            currentYear,
+            CURRENT_YEAR,
             nextRound,
             standing.Constructor.constructorId,
             standing.position,
