@@ -122,8 +122,6 @@ const Home: NextPage = () => {
     datasets: datasets
   }
 
-  console.log(data)
-
   return (
     <>
       <Head>
