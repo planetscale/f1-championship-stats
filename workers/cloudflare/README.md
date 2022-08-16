@@ -1,5 +1,6 @@
 # F1 Stats on Cloudflare Workers
 This is an example Cloudflare Worker that connects to a PlanetScale database to update and retrieve Formula 1 stats.
+It has two parts: a `cron` that runs to update the database with stats. And a `data.json` endpoint that serves the stats up in JSON format.
 
 ## Setup
 1. Run `npm install`
