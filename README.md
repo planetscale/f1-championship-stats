@@ -27,3 +27,6 @@ To learn more about how to run each worker, visit the subdirectories for each.
 - [Netlify](https://github.com/planetscale/f1-championship-stats/tree/main/workers/netlify)
 - [Vercel](https://github.com/planetscale/f1-championship-stats/tree/main/workers/vercel)
 
+## License
+
+The project is available as open source under the terms of the [Apache-2.0 license](https://github.com/planetscale/f1-championship-stats/blob/main/LICENSE).
