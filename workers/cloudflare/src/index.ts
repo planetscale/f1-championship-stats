@@ -8,7 +8,7 @@ export interface Env {
 
 const currentYear = 2022
 
-export default {
+const Worker = {
   async fetch(request: Request, env: Env, _ctx: ExecutionContext): Promise<Response> {
     const url = new URL(request.url)
     const pathname = url.pathname
@@ -112,3 +112,5 @@ async function getJSON(url: string) {
   const response = await fetch(url, init)
   return JSON.parse(JSON.stringify(await response.json()))
 }
+
+export default Worker
