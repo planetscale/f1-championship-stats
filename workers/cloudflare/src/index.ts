@@ -1,4 +1,4 @@
-import { connect } from '@planetscale/database'
+import { connect, Connection, ExecutedQuery } from '@planetscale/database'
 
 export interface Env {
   PSCALE_HOST: string
@@ -62,19 +62,8 @@ const Worker = {
       getJSON(`https://ergast.com/api/f1/${currentYear}.json`)
     ])
 
-    for (const team of teams.MRData.ConstructorTable.Constructors) {
-      await conn.execute(
-        'INSERT INTO constructor_teams (id, name, nationality, url) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = ?',
-        [team.constructorId, team.name, team.nationality, team.url, team.constructorId]
-      )
-    }
-
-    for (const race of races.MRData.RaceTable.Races) {
-      await conn.execute(
-        'INSERT INTO constructor_races (season, round, race_name, date) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE season = ?, round = ?, race_name = ?, date = ?',
-        [race.season, race.round, race.raceName, race.date, race.season, race.round, race.raceName, race.date]
-      )
-    }
+    await Promise.all(teams.MRData.ConstructorTable.Constructors.map((team: any) => saveTeam(conn, team)))
+    await Promise.all(races.MRData.RaceTable.Races.map((race: any) => saveRace(conn, race)))
 
     const latestRoundResp = await conn.execute('SELECT MAX(round) AS max FROM constructor_standings WHERE season = ?', [
       currentYear
@@ -101,6 +90,20 @@ const Worker = {
       })
     }
   }
+}
+
+async function saveTeam(conn: Connection, team: any): Promise<ExecutedQuery> {
+  return conn.execute(
+    'INSERT INTO constructor_teams (id, name, nationality, url) VALUES (:constructorId, :name, :nationality, :url) ON DUPLICATE KEY UPDATE id = :constructorId',
+    team
+  )
+}
+
+async function saveRace(conn: Connection, race: any): Promise<ExecutedQuery> {
+  return conn.execute(
+    'INSERT INTO constructor_races (season, round, race_name, date) VALUES (:season, :round, :raceName, :date) ON DUPLICATE KEY UPDATE season = :season, round = :round, race_name = :raceName, date = :date',
+    race
+  )
 }
 
 async function getJSON(url: string) {
