@@ -1,0 +1,25 @@
+---
+- - :permit
+  - New BSD
+  - :who:
+    :why:
+    :versions: []
+    :when: 2022-08-16 21:12:25.200159000 Z
+- - :permit
+  - Apache 2.0
+  - :who:
+    :why:
+    :versions: []
+    :when: 2022-08-16 21:12:30.116969000 Z
+- - :permit
+  - MIT
+  - :who:
+    :why:
+    :versions: []
+    :when: 2022-08-16 21:12:33.245181000 Z
+- - :approve
+  - wrangler
+  - :who:
+    :why:
+    :versions: []
+    :when: 2022-08-16 21:13:17.946158000 Z
