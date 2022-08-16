@@ -151,7 +151,7 @@ const Home: NextPage = () => {
           </label>
 
           <select className='focus-ring w-20 flex-1 rounded rounded-l-none rounded-r border border-none py-0 pr-4 pl-2 text-xs !shadow-none !ring-0'>
-            <option selected>CloudFlare</option>
+            <option selected>Cloudflare</option>
             <option>Vercel</option>
             <option>Fastly</option>
           </select>
