@@ -1,0 +1,12 @@
+name = "f1-championship-stats"
+main = "src/index.ts"
+compatibility_date = "2022-07-31"
+
+[triggers]
+crons = [ "0 */1 * * SUN" ]
+
+# The necessary secrets are:
+# - PSCALE_USERNAME
+# - PSCALE_PASSWORD
+# - PSCALE_HOST
+# Run `echo <VALUE> | wrangler secret put <NAME>` for each of these
