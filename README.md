@@ -1,56 +1,27 @@
-## local dev
+# F1 Championship Stats
+See how your favorite F1 team is progressing in the Constructors Championship. All data served from the Edge.
 
-Install wranger:
+## How it works
+All of the data for this application is returned from "the edge". This means the code is executing in the data center nearest to you, reducing the latency of the request.
+Each of these workers connects to a PlanetScale database via [`@planetscale/database`](https://github.com/planetscale/database-js) and returns a JSON payload with F1 stats to render the page.
+You can use these as examples for how to start using your PlanetScale database from an edge worker.
 
-```
-npm install -g wrangler
-```
+The frontend application is a Next.js app running on Vercel.
 
-To run the app locally you'll need to create credentials for your PlanetScale database and set them as secrets.
-
-Set your PSCALE credential secrets.
-
-```
-wrangler secret put PSCALE_USERNAME
-wrangler secret put PSCALE_PASSWORD
-wrangler secret put PSCALE_HOST
-```
-
-```
-wrangler dev
-```
-
-Once that starts, hit `l` to start `local mode`. Then to trigger the cron, you can run: `curl http://localhost:8787/cdn-cgi/mf/scheduled`
-
-## Production (CloudFlare)
-
-```
-wrangler publish
-```
+## Local development
+To run the frontend (UI).
 
 ```bash
+npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Edge workers
+To learn more about how to run each worker, visit the subdirectories for each.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+- [Cloudflare](https://github.com/planetscale/f1-championship-stats/tree/main/workers/cloudflare)
+- [Netlify](https://github.com/planetscale/f1-championship-stats/tree/main/workers/netlify)
+- [Vercel](https://github.com/planetscale/f1-championship-stats/tree/main/workers/vercel)
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
