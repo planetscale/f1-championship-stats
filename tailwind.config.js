@@ -141,5 +141,5 @@ module.exports = {
       spacing: spacing()
     }
   },
-  plugins: []
+  plugins: [require('@tailwindcss/forms')]
 }
