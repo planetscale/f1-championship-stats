@@ -49,6 +49,19 @@ function fetcher<T>(input: RequestInfo, init?: RequestInit): Promise<T> {
   return fetch(input, init).then((res) => res.json())
 }
 
+export const constructorColor = {
+  alfa: '#A32F3C',
+  alphatauri: '#587B98',
+  alpine: '#4891CC',
+  aston_martin: '#46806E',
+  ferrari: '#ED1D25',
+  haas: '#B7B9BC',
+  mclaren: '#E6863B',
+  mercedes: '#6BD4BF',
+  red_bull: '#2F5ABF',
+  williams: '#63BBD9'
+}
+
 const Home: NextPage = () => {
   const { data, error } = useSWR<RaceData>('https://f1-championship-stats.mike.workers.dev/data.json', fetcher)
 
@@ -56,19 +69,6 @@ const Home: NextPage = () => {
 
   let raceNames = []
   const datasets = []
-
-  const constructorColor = {
-    alfa: '#A32F3C',
-    alphatauri: '#587B98',
-    alpine: '#4891CC',
-    aston_martin: '#46806E',
-    ferrari: '#ED1D25',
-    haas: '#B7B9BC',
-    mclaren: '#E6863B',
-    mercedes: '#6BD4BF',
-    red_bull: '#2F5ABF',
-    williams: '#63BBD9'
-  }
 
   const circuitName = {
     'Bahrain Grand Prix': 'Bahrain',
@@ -149,16 +149,9 @@ const Home: NextPage = () => {
       <main>
         <div className='container relative mx-auto px-6 pb-6'>
           <div className='top-1/2 right-5 z-[1] mb-3 space-y-1 rounded-sm bg-gray-800 p-2 font-bold text-white shadow-xl shadow-black/25 lg:absolute lg:w-38 lg:-translate-y-1/2 xl:right-14 2xl:right-20'>
-            <StandingsItem position={1} teamName='Red Bull' totalPoints={431} />
-            <StandingsItem position={2} teamName='Ferrari' totalPoints={334} />
-            <StandingsItem position={3} teamName='Mercedes' totalPoints={304} />
-            <StandingsItem position={4} teamName='Alpine' totalPoints={99} />
-            <StandingsItem position={5} teamName='McLaren' totalPoints={95} />
-            <StandingsItem position={6} teamName='Alfa Romeo' totalPoints={51} />
-            <StandingsItem position={7} teamName='Haas' totalPoints={34} />
-            <StandingsItem position={8} teamName='Alfa Tauri' totalPoints={27} />
-            <StandingsItem position={9} teamName='Aston Martin' totalPoints={20} />
-            <StandingsItem position={10} teamName='Williams' totalPoints={3} />
+            {data?.standings.map((standing, i) => (
+              <StandingsItem key={i} standing={standing} />
+            ))}
           </div>
 
           <div className='grid translate-x-[18px] translate-y-3 grid-cols-22 whitespace-nowrap pt-1 pb-2 text-2xs sm:translate-x-[19px] md:translate-x-[23px] lg:translate-x-[22px] lg:pb-0 xl:translate-x-[34px] 2xl:translate-x-[46px]'>
