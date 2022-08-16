@@ -259,7 +259,7 @@ const Home: NextPage = () => {
           <span>Powered by</span> <SVG src='planetscale.svg' />
         </a>
 
-        <a className='flex items-center space-x-1' href='http://www.github.com'>
+        <a className='flex items-center space-x-1' href='https://github.com/planetscale/f1-championship-stats'>
           <span>View on</span> <SVG src='github-icon.svg' />
         </a>
       </footer>
