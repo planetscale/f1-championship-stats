@@ -69,8 +69,8 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>F1 Championship standings</title>
-        <meta name='description' content='F1 Championship standings' />
+        <title>F1 Constructors Championship standings</title>
+        <meta name='description' content='F1 Constructors Championship standings week-by-week. Powered by edge functions and PlanetScale.' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
 
@@ -187,6 +187,10 @@ const Home: NextPage = () => {
             </div>
           ))}
         </div>
+        <p className='mt-4'>See the progress week-by-week of your favorite F1 team in the Constructors Championship.</p>
+        <h3 className='mt-2 text-xl'>How this works</h3>
+        <p>This app is powered by edge functions and a PlanetScale database. Each edge function uses <a className="text-blue" href="https://github.com/planetscale/database-js">@planetscale/database</a> to query data over HTTP.</p>
+        <p>Use the drop down to swap between different edge functions. See the source for each function <a href="https://github.com/planetscale/f1-championship-stats/tree/main/edge-functions">here</a>.</p>
       </main>
 
       <footer className='container mx-auto mt-2 flex items-center justify-between px-6 pb-8'>
