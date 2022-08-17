@@ -72,12 +72,12 @@ const Home: NextPage = () => {
           <span className='block text-[#E20500]'>2022 Formula 1</span>Constructor championship standings
         </h1>
 
-        <div className='focus-within-ring flex rounded-sm border p-1'>
+        <div className='flex rounded-sm border p-1 focus-within:border-blue-500 focus-within:shadow-none focus-within:outline-none focus-within:ring-2 focus-within:ring-blue-200 focus-within:ring-offset-0 focus:!transition-none dark:focus-within:ring-blue-800'>
           <label className='select-none whitespace-nowrap rounded-xs bg-gray-800 px-1 py-sm text-xs text-white'>
             Data source
           </label>
 
-          <select className='focus-ring w-20 flex-1 rounded rounded-l-none rounded-r border border-none py-0 pr-4 pl-2 text-xs !shadow-none !ring-0'>
+          <select className='w-20 flex-1 rounded rounded-l-none rounded-r border border-none py-0 pr-4 pl-2 text-xs !shadow-none !ring-0 focus:border-blue-500 focus:shadow-none focus:outline-none focus:ring-2 focus:ring-blue-200 focus:ring-offset-0 focus:!transition-none dark:focus:ring-blue-800'>
             <option selected>Cloudflare</option>
             <option>Vercel</option>
             <option>Fastly</option>

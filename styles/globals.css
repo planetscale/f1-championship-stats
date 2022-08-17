@@ -15,27 +15,3 @@
 body {
   @apply antialiased;
 }
-
-@layer utilities {
-  .focus-ring {
-    @apply focus:ring-2;
-    @apply focus:outline-none;
-    @apply focus:ring-offset-0;
-    @apply focus:ring-blue-200;
-    @apply dark:focus:ring-blue-800;
-    @apply focus:border-blue-500;
-    @apply focus:shadow-none;
-    @apply focus:!transition-none;
-  }
-
-  .focus-within-ring {
-    @apply focus-within:ring-2;
-    @apply focus-within:outline-none;
-    @apply focus-within:ring-offset-0;
-    @apply focus-within:ring-blue-200;
-    @apply dark:focus-within:ring-blue-800;
-    @apply focus-within:border-blue-500;
-    @apply focus-within:shadow-none;
-    @apply focus:!transition-none;
-  }
-}
