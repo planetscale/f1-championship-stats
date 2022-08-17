@@ -1,5 +1,5 @@
 # F1 Championship Stats 🏎 
-See how your favorite F1 team is progressing in the Constructors Championship using the PlanetScale serverless driver for JavaScript and edge functions.
+See how your favorite F1 team is progressing in the Constructors Championship using the [PlanetScale serverless driver for JavaScript](https://github.com/planetscale/database-js) and edge functions.
 
 <img width="1279" alt="CleanShot 2022-08-17 at 14 03 04@2x" src="https://user-images.githubusercontent.com/1648941/185232983-d27c0dd8-a070-4c16-9fc8-440acd9dfc63.png">
 
