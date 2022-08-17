@@ -1,6 +1,7 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import useSWR from 'swr'
+import { useState } from 'react'
 import SVG from 'react-inlinesvg'
 import { useTheme } from 'next-themes'
 import maxBy from 'lodash.maxby'
@@ -16,9 +17,15 @@ function fetcher<T>(input: RequestInfo, init?: RequestInit): Promise<T> {
   return fetch(input, init).then((res) => res.json())
 }
 
+const cloudflareUrl = 'https://f1-championship-stats.mike.workers.dev/data.json'
+const netlifyUrl = 'https://f1-championship-stats.netlify.app/data.json'
+const vercelUrl = 'https://f1-championship-stats-workers.preview.planetscale.com/api/data.json'
+
 const Home: NextPage = () => {
   const { resolvedTheme } = useTheme()
   const { data, error } = useSWR<RaceData>('https://f1-championship-stats.mike.workers.dev/data.json', fetcher)
+  const [edgeFunctionUrl, setEdgeFunctionUrl] = useState(cloudflareUrl)
+  const onChange = (event) => setEdgeFunctionUrl(event.target.value)
 
   if (error) return
 
@@ -81,16 +88,16 @@ const Home: NextPage = () => {
 
         <div className='flex rounded border p-1 focus-within:border-blue-500 focus-within:shadow-none focus-within:outline-none focus-within:ring-2 focus-within:ring-blue-200 focus-within:ring-offset-0 focus:!transition-none dark:focus-within:ring-blue-800'>
           <label className='dark select-none whitespace-nowrap rounded-xs bg-secondary px-1 py-sm text-xs text-primary'>
-            Data source
+            Edge function
           </label>
 
           <select
-            defaultValue='Cloudflare'
+            onChange={onChange} defaultValue={cloudflareUrl}
             className='w-20 flex-1 border-none bg-primary py-0 pr-4 pl-2 text-xs !shadow-none !ring-0 focus:border-blue-500 focus:shadow-none focus:outline-none focus:ring-2 focus:ring-blue-200 focus:ring-offset-0 focus:!transition-none dark:focus:ring-blue-800'
           >
-            <option>Cloudflare</option>
-            <option>Vercel</option>
-            <option>Fastly</option>
+            <option value={cloudflareUrl}>Cloudflare</option>
+            <option value={netlifyUrl}>Netlify</option>
+            <option value={vercelUrl}>Vercel</option>
           </select>
         </div>
       </header>
