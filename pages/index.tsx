@@ -1,10 +1,9 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import useSWR from 'swr'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import SVG from 'react-inlinesvg'
 import { useTheme } from 'next-themes'
-import maxBy from 'lodash.maxby'
 
 import LineChart from '@/components/LineChart'
 import StandingsItem from '@/components/StandingsItem'
@@ -12,7 +11,7 @@ import StandingsItem from '@/components/StandingsItem'
 import { constructorColor, circuitName } from '@/utils/detail'
 import { RaceData, Constructor } from '@/utils/types'
 
-function fetcher<T>(input: RequestInfo, init?: RequestInit): Promise<T> {
+async function fetcher<T>(input: RequestInfo, init?: RequestInit): Promise<T> {
   return fetch(input, init).then((res) => res.json())
 }
 
@@ -25,47 +24,91 @@ const Home: NextPage = () => {
   const [edgeFunctionUrl, setEdgeFunctionUrl] = useState(cloudflareUrl)
   const { data, error } = useSWR<RaceData>(edgeFunctionUrl, fetcher)
   const onChange = (event) => setEdgeFunctionUrl(event.target.value)
+  const [raceNames, setRaceNames] = useState([])
+  const [datasets, setDatasets] = useState([])
+  const [raceDates, setRaceDates] = useState([])
+  const [selectedRound, setSelectedRound] = useState(datasets[0]?.data.length - 1 ?? -1)
+  const [teams, setTeams] = useState({})
+  const [standings, setStandings] = useState([])
+  const [lastIndex, setLastIndex] = useState(0)
+
+  useEffect(() => {
+    const lastIndex = datasets[0]?.data.length - 1
+    setSelectedRound(lastIndex ?? -1)
+    setLastIndex(lastIndex ?? 0)
+  }, [datasets])
+
+  useEffect(() => {
+    if (data) {
+      const f = new Intl.DateTimeFormat('en-us', { month: 'short', day: 'numeric', timeZone: 'UTC' })
+
+      setRaceDates(
+        data?.races.map((item) => {
+          return f.formatToParts(Date.parse(item.date)).reduce((acc, part) => ({ ...acc, [part.type]: part.value }), {})
+        }) ?? []
+      )
+      setRaceNames(data.races.map((item) => circuitName(item.race_name)))
+
+      const teams: Record<string, Constructor> = data.results.reduce((acc, item) => {
+        if (!acc[item.teamId]) {
+          acc[item.teamId] = { name: item.name, points: [], id: item.teamId }
+        }
+        acc[item.teamId].teamName = item.name
+        acc[item.teamId].points.push(item.points)
+        return acc
+      }, {})
+
+      setTeams(teams)
+
+      setDatasets(
+        Object.keys(teams).map((key) => {
+          const team = teams[key]
+          return {
+            label: team.name,
+            data: team.points,
+            fill: false,
+            borderWidth: 2,
+            borderColor: constructorColor(key),
+            backgroundColor: constructorColor(key),
+            pointBorderColor: resolvedTheme === 'light' ? '#FFFFFF' : '#000000',
+            pointBorderWidth: 2
+          }
+        })
+      )
+    }
+  }, [data])
+
+  useEffect(() => {
+    if (selectedRound < 0) {
+      return
+    }
+
+    const standingsArr = Object.keys(teams).map((key, i) => {
+      const team = teams[key]
+      const points = team.points[selectedRound]
+      return {
+        position: i + 1,
+        points: points,
+        name: team.name,
+        teamId: team.id
+      }
+    })
+
+    const newStandings = standingsArr
+      .sort((a, b) => b.points - a.points)
+      .map((standing, i) => {
+        return {
+          position: i + 1,
+          points: standing.points,
+          name: standing.name,
+          teamId: standing.teamId
+        }
+      })
+
+    setStandings(newStandings)
+  }, [selectedRound, teams])
 
   if (error) return
-
-  let raceNames = []
-  const datasets = []
-  let currentRound = -1
-
-  const f = new Intl.DateTimeFormat('en-us', { month: 'short', day: 'numeric', timeZone: 'UTC' })
-  const raceDates: Array<Record<string, string>> =
-    data?.races.map((item) => {
-      return f.formatToParts(Date.parse(item.date)).reduce((acc, part) => ({ ...acc, [part.type]: part.value }), {})
-    }) ?? []
-
-  if (data) {
-    raceNames = data.races.map((item) => circuitName(item.race_name))
-
-    const { round } = maxBy(data.results, 'round')
-    currentRound = round - 1
-
-    const teams: Record<string, Constructor> = data.results.reduce((acc, item) => {
-      if (!acc[item.teamId]) {
-        acc[item.teamId] = { teamName: item.name, points: [] }
-      }
-      acc[item.teamId].teamName = item.name
-      acc[item.teamId].points.push(item.points)
-      return acc
-    }, {})
-
-    for (const [key, team] of Object.entries(teams)) {
-      datasets.push({
-        label: team.teamName,
-        data: team.points,
-        fill: false,
-        borderWidth: 2,
-        borderColor: constructorColor(key),
-        backgroundColor: constructorColor(key),
-        pointBorderColor: resolvedTheme === 'light' ? '#FFFFFF' : '#000000',
-        pointBorderWidth: 2
-      })
-    }
-  }
 
   const chartData = {
     labels: raceNames,
@@ -112,30 +155,34 @@ const Home: NextPage = () => {
         <>
           <main className='container relative mx-auto px-3 pb-6 font-brand md:px-6 lg:pr-8'>
             <div className='dark top-1/2 right-5 z-1 mb-3 space-y-1 rounded bg-secondary p-2 font-bold text-primary shadow-xl shadow-black/25 supports-bg-blur:bg-black/90 supports-bg-blur:backdrop-blur-sm dark:shadow-black/90 dark:ring-1 dark:ring-white/10 supports-bg-blur:dark:bg-gray-850/60 lg:absolute lg:w-38 lg:-translate-y-1/2 xl:right-14 2xl:right-20'>
-              {data?.standings.map((standing, i) => (
+              {standings.map((standing, i) => (
                 <StandingsItem key={i} standing={standing} />
               ))}
             </div>
 
             <div className='grid translate-x-[18px] translate-y-3 grid-cols-22 whitespace-nowrap pt-1 pb-2 text-2xs sm:translate-x-[19px] md:translate-x-[23px] lg:translate-x-[22px] lg:pb-0 xl:translate-x-[34px] 2xl:translate-x-[46px]'>
               {raceDates.map((date, i) => (
-                <div
+                <button
                   key={i}
+                  disabled={i > lastIndex}
+                  onClick={() => {
+                    setSelectedRound(i)
+                  }}
                   className={`flex origin-left translate-x-px -rotate-45 items-center justify-center rounded bg-primary py-sm px-2.5 lg:h-4.5 lg:w-4.5 lg:rotate-0 lg:px-0 lg:text-center lg:ring-1 lg:ring-black/[.08] lg:dark:ring-white/15 ${
-                    i === currentRound
+                    i === selectedRound
                       ? 'z-1 bg-gray-850 text-gray-50 shadow-lg shadow-black/25 dark:bg-gray-50 dark:shadow-black/90 lg:border-transparent'
                       : 'lg:shadow-md lg:shadow-black/5 lg:dark:shadow-black/90'
                   }`}
                 >
                   <div
                     className={`flex space-x-xs lg:block lg:translate-y-xs ${
-                      i === currentRound ? 'lg:text-gray-50 lg:dark:text-gray-900' : ''
+                      i === selectedRound ? 'lg:text-gray-50 lg:dark:text-gray-900' : ''
                     }`}
                   >
                     <div className='text-3xs font-bold leading-none tracking-tighter'>{date.month}</div>
                     <div className='text-3xs font-bold leading-none lg:text-sm lg:font-normal'>{date.day}</div>
                   </div>
-                </div>
+                </button>
               ))}
             </div>
 
@@ -170,7 +217,7 @@ const Home: NextPage = () => {
                     <div
                       key={i}
                       className={`border-b border-r border-r-gray-50 [border-bottom-style:dashed] dark:border-r-gray-850 ${
-                        i % 21 === 11 ? 'border-r-gray-800 dark:border-r-gray-100' : ''
+                        i % 21 === selectedRound - 1 ? 'border-r-gray-800 dark:border-r-gray-100' : ''
                       }`}
                     />
                   ))}
@@ -183,7 +230,7 @@ const Home: NextPage = () => {
                     <div
                       key={i}
                       className={`relative border-b border-r border-r-gray-50 [border-bottom-style:dashed] dark:border-r-gray-850 ${
-                        i % 21 === 11
+                        i % 21 === selectedRound - 1
                           ? 'border-r-gray-800 after:absolute after:-bottom-2 after:-right-px after:block after:h-2 after:w-px after:bg-gray-800 dark:border-r-gray-100 dark:after:bg-gray-100'
                           : ''
                       }`}
@@ -202,7 +249,7 @@ const Home: NextPage = () => {
                 <div
                   key={i}
                   className={`origin-top-right -translate-x-px -rotate-45 py-xs px-[6px] ${
-                    i === currentRound
+                    i === selectedRound
                       ? 'z-1 rounded bg-gray-850 font-bold tracking-tighter shadow-lg shadow-black/25 dark:bg-gray-50 dark:shadow-black/90 lg:border-transparent lg:text-gray-50 lg:dark:text-gray-900'
                       : ''
                   }`}
