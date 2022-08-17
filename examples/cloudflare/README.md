@@ -3,18 +3,26 @@ This is an example Cloudflare Worker that connects to a PlanetScale database to 
 It has two parts: a `cron` that runs to update the database with stats. And a `data.json` endpoint that serves the stats up in JSON format.
 
 ## Setup
-1. Run `npm install`
+1. Run `npm install`.
 2. Create a PlanetScale database to store the stats. Add the schema shown below.
-3. Create a PlanetScale password and set your credential as secrets.
-- wrangler secret put PSCALE_HOST
-- wrangler secret put PSCALE_PASSWORD
-- wrangler secret put PSCALE_USERNAME
-4. Run `wrangler dev` to start the app.
+3. Enroll your new database in the **PlanetScale serverless driver for JavaScript** beta.
+3. Create a PlanetScale password and add the new credentials as secrets:
+- `npx wrangler secret put PSCALE_HOST`
+- `npx wrangler secret put PSCALE_PASSWORD`
+- `npx wrangler secret put PSCALE_USERNAME`
+4. Run `npx wrangler dev` to start the app.
 
 ### Running the cron
-1. Run `wranger dev`
-2. Press L for local mode
-3. Run `curl http://localhost:8787/cdn-cgi/mf/scheduled`
+1. To connect to the database when running the app locally you'll need to add the connection details to your environment. One way to do this is to add them to `wrangler.toml`, just be sure not to check them in to your Git repo.
+  ```
+  [vars]
+  PSCALE_USERNAME = "USERNAME"
+  PSCALE_PASSWORD = "PASSWORD"
+  PSCALE_HOST = “REGION.connect.psdb.cloud”
+  ```
+2. Run `npx wrangler dev`
+3. Press `L` for local mode
+4. Run `curl http://localhost:8787/cdn-cgi/mf/scheduled`
 
 This will execute the cron job and sync F1 stats data to your database.
 
