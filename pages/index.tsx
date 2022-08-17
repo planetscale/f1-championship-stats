@@ -76,7 +76,7 @@ const Home: NextPage = () => {
         })
       )
     }
-  }, [data])
+  }, [data, resolvedTheme])
 
   useEffect(() => {
     if (selectedRound < 0) {
@@ -128,7 +128,7 @@ const Home: NextPage = () => {
 
       <header className='container mx-auto items-end justify-between space-y-2 px-3 pt-4 pb-4 md:flex md:px-6 md:pb-2 md:pt-8'>
         <h1 className='text-xl font-semibold lg:text-2xl'>
-          <span className='block font-brand leading-none'>
+          <span className='block font-brand leading-none tracking-tighter'>
             2022 <span className='text-[#E20500]'>Formula 1</span>
           </span>
           Constructor championship standings
@@ -170,9 +170,9 @@ const Home: NextPage = () => {
                   }}
                   className={`flex origin-left translate-x-px -rotate-45 items-center justify-center rounded bg-primary py-sm px-2.5 lg:h-4.5 lg:w-4.5 lg:rotate-0 lg:px-0 lg:text-center lg:ring-1 lg:ring-black/[.08] lg:dark:ring-white/15 ${
                     i === selectedRound
-                      ? 'z-1 bg-gray-850 text-gray-50 shadow-lg shadow-black/25 dark:bg-gray-50 dark:shadow-black/90 lg:border-transparent'
-                      : 'lg:shadow-md lg:shadow-black/5 lg:dark:shadow-black/90'
-                  }`}
+                      ? 'z-1 bg-gray-850 text-gray-50 shadow-lg shadow-black/25 dark:bg-gray-50 dark:text-gray-900 dark:shadow-black/90 lg:border-transparent'
+                      : 'lg:shadow-black/5 lg:dark:shadow-black/90'
+                  } ${i > lastIndex ? 'text-secondary' : 'lg:shadow-md'}`}
                 >
                   <div
                     className={`flex space-x-xs lg:block lg:translate-y-xs ${
@@ -250,7 +250,7 @@ const Home: NextPage = () => {
                   key={i}
                   className={`origin-top-right -translate-x-px -rotate-45 py-xs px-[6px] ${
                     i === selectedRound
-                      ? 'z-1 rounded bg-gray-850 font-bold tracking-tighter shadow-lg shadow-black/25 dark:bg-gray-50 dark:shadow-black/90 lg:border-transparent lg:text-gray-50 lg:dark:text-gray-900'
+                      ? 'dark: z-1 rounded bg-gray-850 font-bold tracking-tighter text-gray-50 shadow-lg shadow-black/25 dark:bg-gray-50 dark:text-gray-900 dark:shadow-black/90 lg:border-transparent'
                       : ''
                   }`}
                 >
