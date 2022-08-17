@@ -33,6 +33,7 @@ export type RaceData = {
 }
 
 export type Constructor = {
-  teamName: string
+  name: string
   points: any[]
+  id: string
 }
