@@ -29,6 +29,9 @@ To learn more about how to run each function, visit the subdirectories for each:
 - [Vercel](https://github.com/planetscale/f1-championship-stats/tree/main/examples/vercel)
 - [Netlify](https://github.com/planetscale/f1-championship-stats/tree/main/examples/netlify)
 
+## Thank you :heart:
+The F1 stats shown in this application are from the [Ergast Developer API](http://ergast.com/mrd/).
+
 ## License
 
 The project is available as open source under the terms of the [Apache-2.0 license](https://github.com/planetscale/f1-championship-stats/blob/main/LICENSE).
