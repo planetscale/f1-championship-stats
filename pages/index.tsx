@@ -10,7 +10,6 @@ import StandingsItem from '@/components/StandingsItem'
 
 import { constructorColor, circuitName } from '@/utils/detail'
 import { RaceData, Constructor } from '@/utils/types'
-import { resourceLimits } from 'worker_threads'
 
 function fetcher<T>(input: RequestInfo, init?: RequestInit): Promise<T> {
   return fetch(input, init).then((res) => res.json())
