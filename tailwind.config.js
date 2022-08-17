@@ -51,10 +51,24 @@ module.exports = {
       DEFAULT: '4px'
     },
     fontFamily: {
-      sans: ['Formula1-Regular', 'sans-serif']
+      sans: [
+        '-apple-system',
+        'BlinkMacSystemFont',
+        'Segoe UI',
+        'Roboto',
+        'Oxygen',
+        'Ubuntu',
+        'Cantarell',
+        'Fira Sans',
+        'Droid Sans',
+        'Helvetica Neue',
+        'sans-serif'
+      ],
+      brand: ['Formula1-Regular', 'sans-serif']
     },
     fontWeight: {
       normal: 400,
+      semibold: 600,
       bold: 700
     },
     extend: {
