@@ -76,7 +76,7 @@ const Home: NextPage = () => {
         })
       )
     }
-  }, [data])
+  }, [data, resolvedTheme])
 
   useEffect(() => {
     if (selectedRound < 0) {
