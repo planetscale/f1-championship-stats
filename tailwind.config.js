@@ -1,3 +1,5 @@
+const plugin = require('tailwindcss/plugin')
+
 function spacing() {
   const scale = Array(101)
     .fill(null)
@@ -84,5 +86,10 @@ module.exports = {
       }
     }
   },
-  plugins: [require('@tailwindcss/forms')]
+  plugins: [
+    require('@tailwindcss/forms'),
+    plugin(function ({ addVariant }) {
+      addVariant('supports-bg-blur', '@supports (backdrop-filter: blur())')
+    })
+  ]
 }

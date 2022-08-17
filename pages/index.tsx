@@ -83,7 +83,7 @@ const Home: NextPage = () => {
         <link rel='icon' href='/favicon.ico' />
       </Head>
 
-      <header className='container mx-auto items-end justify-between space-y-2 px-6 pt-8 pb-2 md:flex'>
+      <header className='container mx-auto items-end justify-between space-y-2 px-3 pt-8 pb-2 md:flex md:px-6'>
         <h1 className='text-xl lg:text-2xl'>
           <span className='block text-[#E20500]'>2022 Formula 1</span>Constructor championship standings {resolvedTheme}
         </h1>
@@ -107,8 +107,8 @@ const Home: NextPage = () => {
 
       {data && (
         <>
-          <main className='container relative mx-auto px-6 pb-6 lg:pr-8'>
-            <div className='dark top-1/2 right-5 z-1 mb-3 space-y-1 rounded bg-secondary p-2 font-bold text-primary shadow-xl shadow-black/25 dark:shadow-black/90 dark:ring-1 dark:ring-white/10 lg:absolute lg:w-38 lg:-translate-y-1/2 xl:right-14 2xl:right-20'>
+          <main className='container relative mx-auto px-3 pb-6 md:px-6 lg:pr-8'>
+            <div className='dark top-1/2 right-5 z-1 mb-3 space-y-1 rounded bg-secondary p-2 font-bold text-primary shadow-xl shadow-black/25 supports-bg-blur:bg-black/90 supports-bg-blur:backdrop-blur-sm dark:shadow-black/90 dark:ring-1 dark:ring-white/10 supports-bg-blur:dark:bg-gray-850/60 lg:absolute lg:w-38 lg:-translate-y-1/2 xl:right-14 2xl:right-20'>
               {data?.standings.map((standing, i) => (
                 <StandingsItem key={i} standing={standing} />
               ))}
@@ -210,7 +210,7 @@ const Home: NextPage = () => {
             </div>
           </main>
 
-          <section className='container mx-auto px-6 pt-2 pb-8'>
+          <section className='container mx-auto px-3 pt-2 pb-8 md:px-6'>
             <p className='mt-4'>
               See the progress week-by-week of your favorite F1 team in the Constructors Championship.
             </p>
@@ -228,7 +228,7 @@ const Home: NextPage = () => {
             </p>
           </section>
 
-          <footer className='container mx-auto mt-2 flex items-center justify-between px-6 pb-8'>
+          <footer className='container mx-auto mt-2 flex items-center justify-between px-3 pb-8 md:px-6'>
             <a className='flex items-center space-x-1' href='http://www.planetscale.com'>
               <span>Powered by</span> <SVG src='planetscale.svg' />
             </a>
