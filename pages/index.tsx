@@ -28,14 +28,14 @@ const Home: NextPage = () => {
   const [raceNames, setRaceNames] = useState([])
   const [datasets, setDatasets] = useState([])
   const [raceDates, setRaceDates] = useState([])
-  const [currentRound, setCurrentRound] = useState(datasets[0]?.data.length - 1 ?? -1)
+  const [selectedRound, setSelectedRound] = useState(datasets[0]?.data.length - 1 ?? -1)
   const [teams, setTeams] = useState({})
   const [standings, setStandings] = useState([])
   const [lastIndex, setLastIndex] = useState(0)
 
   useEffect(() => {
     const lastIndex = datasets[0]?.data.length - 1
-    setCurrentRound(lastIndex ?? -1)
+    setSelectedRound(lastIndex ?? -1)
     setLastIndex(lastIndex ?? 0)
   }, [datasets])
 
@@ -80,13 +80,13 @@ const Home: NextPage = () => {
   }, [data])
 
   useEffect(() => {
-    if (currentRound < 0) {
+    if (selectedRound < 0) {
       return
     }
 
     const standingsArr = Object.keys(teams).map((key, i) => {
       const team = teams[key]
-      const points = team.points[currentRound]
+      const points = team.points[selectedRound]
       return {
         position: i + 1,
         points: points,
@@ -107,7 +107,7 @@ const Home: NextPage = () => {
       })
 
     setStandings(newStandings)
-  }, [currentRound, teams])
+  }, [selectedRound, teams])
 
   if (error) return
 
@@ -164,17 +164,17 @@ const Home: NextPage = () => {
                   key={i}
                   disabled={i > lastIndex}
                   onClick={() => {
-                    setCurrentRound(i)
+                    setSelectedRound(i)
                   }}
                   className={`flex origin-left translate-x-px -rotate-45 items-center justify-center rounded bg-primary py-sm px-2.5 lg:h-4.5 lg:w-4.5 lg:rotate-0 lg:px-0 lg:text-center lg:ring-1 lg:ring-black/[.08] lg:dark:ring-white/15 ${
-                    i === currentRound
+                    i === selectedRound
                       ? 'z-1 bg-gray-850 text-gray-50 shadow-lg shadow-black/25 dark:bg-gray-50 dark:shadow-black/90 lg:border-transparent'
                       : 'lg:shadow-md lg:shadow-black/5 lg:dark:shadow-black/90'
                   }`}
                 >
                   <div
                     className={`flex space-x-xs lg:block lg:translate-y-xs ${
-                      i === currentRound ? 'lg:text-gray-50 lg:dark:text-gray-900' : ''
+                      i === selectedRound ? 'lg:text-gray-50 lg:dark:text-gray-900' : ''
                     }`}
                   >
                     <div className='text-3xs font-bold leading-none tracking-tighter'>{date.month}</div>
@@ -215,7 +215,7 @@ const Home: NextPage = () => {
                     <div
                       key={i}
                       className={`border-b border-r border-r-gray-50 [border-bottom-style:dashed] dark:border-r-gray-850 ${
-                        i % 21 === currentRound - 1 ? 'border-r-gray-800 dark:border-r-gray-100' : ''
+                        i % 21 === selectedRound - 1 ? 'border-r-gray-800 dark:border-r-gray-100' : ''
                       }`}
                     />
                   ))}
@@ -228,7 +228,7 @@ const Home: NextPage = () => {
                     <div
                       key={i}
                       className={`relative border-b border-r border-r-gray-50 [border-bottom-style:dashed] dark:border-r-gray-850 ${
-                        i % 21 === currentRound - 1
+                        i % 21 === selectedRound - 1
                           ? 'border-r-gray-800 after:absolute after:-bottom-2 after:-right-px after:block after:h-2 after:w-px after:bg-gray-800 dark:border-r-gray-100 dark:after:bg-gray-100'
                           : ''
                       }`}
@@ -247,7 +247,7 @@ const Home: NextPage = () => {
                 <div
                   key={i}
                   className={`origin-top-right -translate-x-px -rotate-45 py-xs px-[6px] ${
-                    i === currentRound
+                    i === selectedRound
                       ? 'z-1 rounded bg-gray-850 font-bold tracking-tighter shadow-lg shadow-black/25 dark:bg-gray-50 dark:shadow-black/90 lg:border-transparent lg:text-gray-50 lg:dark:text-gray-900'
                       : ''
                   }`}
