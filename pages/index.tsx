@@ -208,7 +208,7 @@ const Home: NextPage = () => {
                 <div
                   key={i}
                   className={`border-b border-r border-r-gray-50 border-b-gray-100 [border-bottom-style:dashed] ${
-                    i % 21 === 11 ? 'border-r-gray-800' : ''
+                    i % 21 === selectedRaceIndex - 1 ? 'border-r-gray-800' : ''
                   }`}
                 />
               ))}
@@ -221,7 +221,7 @@ const Home: NextPage = () => {
                 <div
                   key={i}
                   className={`relative border-b border-r border-r-gray-50 border-b-gray-100 [border-bottom-style:dashed] ${
-                    i % 21 === 11
+                    i % 21 === selectedRaceIndex - 1
                       ? 'border-r-gray-800 after:absolute after:-bottom-2 after:-right-px after:block after:h-2 after:w-px after:bg-gray-800'
                       : ''
                   }`}
