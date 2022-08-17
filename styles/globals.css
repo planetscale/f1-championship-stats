@@ -19,7 +19,9 @@
   --gray-900: theme('colors.gray.900');
 
   --blue-200: theme('colors.blue.200');
+  --blue-400: theme('colors.blue.400');
   --blue-500: theme('colors.blue.500');
+  --blue-600: theme('colors.blue.600');
   --blue-800: theme('colors.blue.800');
 
   --bg-primary: var(--white);
@@ -29,6 +31,7 @@
 
   --text-primary: var(--gray-850);
   --text-secondary: var(--gray-600);
+  --text-blue: var(--blue-600);
 }
 
 .dark {
@@ -39,6 +42,7 @@
 
   --text-primary: var(--gray-050);
   --text-secondary: var(--gray-400);
+  --text-blue: var(--blue-400);
 }
 
 @font-face {
