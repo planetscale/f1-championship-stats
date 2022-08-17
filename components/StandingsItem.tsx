@@ -9,7 +9,7 @@ const StandingsItem: React.FC<Props> = ({ standing }) => {
   return (
     <div className='flex items-center justify-between'>
       <div className='flex items-center space-x-1'>
-        <div className='flex h-3 w-3 items-center justify-center rounded-xs bg-white text-xs font-bold tracking-[-1px] text-gray-900'>
+        <div className='flex h-3 w-3 items-center justify-center rounded-xs bg-gray-50 text-xs font-bold tracking-[-1px] text-gray-900'>
           {standing.position}
         </div>
         <div style={{ background: constructorColor(standing.teamId) }} className='h-2 w-xs translate-x-px rounded' />

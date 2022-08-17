@@ -27,12 +27,6 @@ type Props = {
 const LineChart: React.FC<Props> = ({ chartData }) => {
   const chartRef = useRef(null)
 
-  useEffect(() => {
-    if (chartRef.current) {
-      console.log(chartRef)
-    }
-  }, [])
-
   const options = {
     events: [],
     maintainAspectRatio: false,
