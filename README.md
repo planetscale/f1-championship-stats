@@ -12,6 +12,8 @@ You can use these as examples for how to start using your PlanetScale database f
 
 The frontend application is a Next.js app running on Vercel.
 
+> Note: Before using [`@planetscale/database`](https://github.com/planetscale/database-js), make sure to enroll your database in the **PlanetScale serverless driver for JavaScript** beta (under your database's **Settings** > **Beta features** section). 
+
 ## Local development
 To run the frontend (UI).
 
