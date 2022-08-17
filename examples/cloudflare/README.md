@@ -20,12 +20,12 @@ This will execute the cron job and sync F1 stats data to your database.
 
 ## Data.json endpoint
 This endpoint is used by the frontend app to display the F1 statistics. It queries the PlanetScale database and returns the data in JSON format.
-The code for this endpoint is [here](https://github.com/planetscale/f1-championship-stats/blob/main/workers/cloudflare/src/index.ts#L12).
+The code for this endpoint is [here](https://github.com/planetscale/f1-championship-stats/blob/main/examples/cloudflare/src/index.ts#L12).
 
 ## Cron job
 Every hour on Sundays a cron will run to sync data from the Ergast F1 API and store it in the PlanetScale database.
 
-The cron schedule is defined in `wrangler.toml` and the code is [here](https://github.com/planetscale/f1-championship-stats/blob/main/workers/cloudflare/src/index.ts#L51). 
+The cron schedule is defined in `wrangler.toml` and the code is [here](https://github.com/planetscale/f1-championship-stats/blob/main/examples/cloudflare/src/index.ts#L51). 
 
 ## Database Schema
 Here is the schema used for this app.
