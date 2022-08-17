@@ -263,15 +263,13 @@ const Home: NextPage = () => {
           <section className='container mx-auto px-3 pt-2 pb-6 md:px-6'>
             <div className='space-y-1 border-y py-3'>
               <h3 className='text-sm font-semibold'>How this works</h3>
-              <p>
-                This app is powered by edge functions and a PlanetScale database. Each edge function uses{' '}
+              <p className='w-3/4'>
+                This is powered by edge functions and a PlanetScale database. Each edge function uses{' '}
                 <a href='https://github.com/planetscale/database-js' className='text-blue'>
                   @planetscale/database
                 </a>{' '}
-                to query data over HTTP.
-              </p>
-              <p>
-                Use the drop down to swap between different edge functions. See the source for each function{' '}
+                to query data over HTTP. Use the drop down to swap between different edge functions. See the source for
+                each function{' '}
                 <a
                   href='https://github.com/planetscale/f1-championship-stats/tree/main/examples'
                   className='text-blue'
