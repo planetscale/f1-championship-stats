@@ -4,7 +4,6 @@ import useSWR from 'swr'
 import { useEffect, useState } from 'react'
 import SVG from 'react-inlinesvg'
 import { useTheme } from 'next-themes'
-import maxBy from 'lodash.maxby'
 
 import LineChart from '@/components/LineChart'
 import StandingsItem from '@/components/StandingsItem'
