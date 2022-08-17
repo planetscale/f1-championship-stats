@@ -1,3 +1,5 @@
+const plugin = require('tailwindcss/plugin')
+
 function spacing() {
   const scale = Array(101)
     .fill(null)
@@ -40,7 +42,9 @@ module.exports = {
       },
       blue: {
         200: '#a9dffe',
+        400: '#47b7f8',
         500: '#1e9de7',
+        600: '#0b6ec5',
         800: '#0e3682'
       }
     },
@@ -49,10 +53,24 @@ module.exports = {
       DEFAULT: '4px'
     },
     fontFamily: {
-      sans: ['Formula1-Regular', 'sans-serif']
+      sans: [
+        '-apple-system',
+        'BlinkMacSystemFont',
+        'Segoe UI',
+        'Roboto',
+        'Oxygen',
+        'Ubuntu',
+        'Cantarell',
+        'Fira Sans',
+        'Droid Sans',
+        'Helvetica Neue',
+        'sans-serif'
+      ],
+      brand: ['Formula1-Regular', 'sans-serif']
     },
     fontWeight: {
       normal: 400,
+      semibold: 600,
       bold: 700
     },
     extend: {
@@ -77,12 +95,18 @@ module.exports = {
       spacing: spacing(),
       textColor: {
         primary: 'var(--text-primary)',
-        secondary: 'var(--text-secondary)'
+        secondary: 'var(--text-secondary)',
+        blue: 'var(--text-blue)'
       },
       zIndex: {
         1: '1'
       }
     }
   },
-  plugins: [require('@tailwindcss/forms')]
+  plugins: [
+    require('@tailwindcss/forms'),
+    plugin(function ({ addVariant }) {
+      addVariant('supports-bg-blur', '@supports (backdrop-filter: blur())')
+    })
+  ]
 }

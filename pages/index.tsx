@@ -83,12 +83,15 @@ const Home: NextPage = () => {
         <link rel='icon' href='/favicon.ico' />
       </Head>
 
-      <header className='container mx-auto items-end justify-between space-y-2 px-6 pt-8 pb-2 md:flex'>
-        <h1 className='text-xl lg:text-2xl'>
-          <span className='block text-[#E20500]'>2022 Formula 1</span>Constructor championship standings {resolvedTheme}
+      <header className='container mx-auto items-end justify-between space-y-2 px-3 pt-4 pb-4 md:flex md:px-6 md:pb-2 md:pt-8'>
+        <h1 className='text-xl font-semibold lg:text-2xl'>
+          <span className='block font-brand leading-none'>
+            2022 <span className='text-[#E20500]'>Formula 1</span>
+          </span>
+          Constructor championship standings
         </h1>
 
-        <div className='flex rounded border p-1 focus-within:border-blue-500 focus-within:shadow-none focus-within:outline-none focus-within:ring-2 focus-within:ring-blue-200 focus-within:ring-offset-0 focus:!transition-none dark:focus-within:ring-blue-800'>
+        <div className='flex rounded border p-1 font-semibold focus-within:border-blue-500 focus-within:shadow-none focus-within:outline-none focus-within:ring-2 focus-within:ring-blue-200 focus-within:ring-offset-0 focus:!transition-none dark:focus-within:ring-blue-800'>
           <label className='dark select-none whitespace-nowrap rounded-xs bg-secondary px-1 py-sm text-xs text-primary'>
             Edge function
           </label>
@@ -107,8 +110,8 @@ const Home: NextPage = () => {
 
       {data && (
         <>
-          <main className='container relative mx-auto px-6 pb-6 lg:pr-8'>
-            <div className='dark top-1/2 right-5 z-1 mb-3 space-y-1 rounded bg-secondary p-2 font-bold text-primary shadow-xl shadow-black/25 dark:shadow-black/90 dark:ring-1 dark:ring-white/10 lg:absolute lg:w-38 lg:-translate-y-1/2 xl:right-14 2xl:right-20'>
+          <main className='container relative mx-auto px-3 pb-6 font-brand md:px-6 lg:pr-8'>
+            <div className='dark top-1/2 right-5 z-1 mb-3 space-y-1 rounded bg-secondary p-2 font-bold text-primary shadow-xl shadow-black/25 supports-bg-blur:bg-black/90 supports-bg-blur:backdrop-blur-sm dark:shadow-black/90 dark:ring-1 dark:ring-white/10 supports-bg-blur:dark:bg-gray-850/60 lg:absolute lg:w-38 lg:-translate-y-1/2 xl:right-14 2xl:right-20'>
               {data?.standings.map((standing, i) => (
                 <StandingsItem key={i} standing={standing} />
               ))}
@@ -210,30 +213,38 @@ const Home: NextPage = () => {
             </div>
           </main>
 
-          <section className='container mx-auto px-6 pt-2 pb-8'>
-            <p className='mt-4'>
-              See the progress week-by-week of your favorite F1 team in the Constructors Championship.
-            </p>
-            <h3 className='mt-2 text-xl'>How this works</h3>
-            <p>
-              This app is powered by edge functions and a PlanetScale database. Each edge function uses{' '}
-              <a className='text-blue' href='https://github.com/planetscale/database-js'>
-                @planetscale/database
-              </a>{' '}
-              to query data over HTTP.
-            </p>
-            <p>
-              Use the drop down to swap between different edge functions. See the source for each function{' '}
-              <a href='https://github.com/planetscale/f1-championship-stats/tree/main/edge-functions'>here</a>.
-            </p>
+          <section className='container mx-auto px-3 pt-2 pb-6 md:px-6'>
+            <div className='space-y-1 border-y py-3'>
+              <h3 className='text-sm font-semibold'>How this works</h3>
+              <p>
+                This app is powered by edge functions and a PlanetScale database. Each edge function uses{' '}
+                <a href='https://github.com/planetscale/database-js' className='text-blue'>
+                  @planetscale/database
+                </a>{' '}
+                to query data over HTTP.
+              </p>
+              <p>
+                Use the drop down to swap between different edge functions. See the source for each function{' '}
+                <a
+                  href='https://github.com/planetscale/f1-championship-stats/tree/main/edge-functions'
+                  className='text-blue'
+                >
+                  here
+                </a>
+                .
+              </p>
+            </div>
           </section>
 
-          <footer className='container mx-auto mt-2 flex items-center justify-between px-6 pb-8'>
-            <a className='flex items-center space-x-1' href='http://www.planetscale.com'>
+          <footer className='container mx-auto mt-2 flex items-center justify-between px-3 pb-8 md:px-6'>
+            <a href='http://www.planetscale.com' className='flex items-center space-x-1 font-semibold'>
               <span>Powered by</span> <SVG src='planetscale.svg' />
             </a>
 
-            <a className='flex items-center space-x-1' href='https://github.com/planetscale/f1-championship-stats'>
+            <a
+              href='https://github.com/planetscale/f1-championship-stats'
+              className='flex items-center space-x-1 font-semibold'
+            >
               <span>View on</span> <SVG src='github-icon.svg' />
             </a>
           </footer>
