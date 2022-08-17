@@ -7,7 +7,6 @@ import LineChart from '@/components/LineChart'
 import StandingsItem from '@/components/StandingsItem'
 
 import { constructorColor, circuitName } from '@/utils/detail'
-
 import { RaceData, Constructor } from '@/utils/types'
 
 function fetcher<T>(input: RequestInfo, init?: RequestInit): Promise<T> {
@@ -77,8 +76,11 @@ const Home: NextPage = () => {
             Data source
           </label>
 
-          <select className='w-20 flex-1 rounded rounded-l-none rounded-r border border-none py-0 pr-4 pl-2 text-xs !shadow-none !ring-0 focus:border-blue-500 focus:shadow-none focus:outline-none focus:ring-2 focus:ring-blue-200 focus:ring-offset-0 focus:!transition-none dark:focus:ring-blue-800'>
-            <option selected>Cloudflare</option>
+          <select
+            defaultValue='Cloudflare'
+            className='w-20 flex-1 rounded rounded-l-none rounded-r border border-none py-0 pr-4 pl-2 text-xs !shadow-none !ring-0 focus:border-blue-500 focus:shadow-none focus:outline-none focus:ring-2 focus:ring-blue-200 focus:ring-offset-0 focus:!transition-none dark:focus:ring-blue-800'
+          >
+            <option>Cloudflare</option>
             <option>Vercel</option>
             <option>Fastly</option>
           </select>
