@@ -84,8 +84,8 @@ const Home: NextPage = () => {
       </Head>
 
       <header className='container mx-auto items-end justify-between space-y-2 px-3 pt-8 pb-2 md:flex md:px-6'>
-        <h1 className='text-xl lg:text-2xl'>
-          <span className='block text-[#E20500]'>2022 Formula 1</span>Constructor championship standings {resolvedTheme}
+        <h1 className='text-xl font-semibold lg:text-2xl'>
+          <span className='block font-brand text-[#E20500]'>2022 Formula 1</span>Constructor championship standings
         </h1>
 
         <div className='flex rounded border p-1 focus-within:border-blue-500 focus-within:shadow-none focus-within:outline-none focus-within:ring-2 focus-within:ring-blue-200 focus-within:ring-offset-0 focus:!transition-none dark:focus-within:ring-blue-800'>
