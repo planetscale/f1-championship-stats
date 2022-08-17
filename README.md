@@ -25,9 +25,9 @@ Visit [http://localhost:3000](http://localhost:3000) in your browser.
 ## Edge functions
 To learn more about how to run each function, visit the subdirectories for each:
 
-- [Cloudflare](https://github.com/planetscale/f1-championship-stats/tree/main/edge-functions/cloudflare)
-- [Vercel](https://github.com/planetscale/f1-championship-stats/tree/main/edge-functions/vercel)
-- [Netlify](https://github.com/planetscale/f1-championship-stats/tree/main/edge-functions/netlify)
+- [Cloudflare](https://github.com/planetscale/f1-championship-stats/tree/main/examples/cloudflare)
+- [Vercel](https://github.com/planetscale/f1-championship-stats/tree/main/examples/vercel)
+- [Netlify](https://github.com/planetscale/f1-championship-stats/tree/main/examples/netlify)
 
 ## License
 
