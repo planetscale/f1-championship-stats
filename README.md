@@ -1,7 +1,7 @@
 # F1 Championship Stats 🏎 
 See how your favorite F1 team is progressing in the Constructors Championship using the PlanetScale serverless driver for JavaScript and edge functions.
 
-**Screenshot here**
+<img width="1279" alt="CleanShot 2022-08-17 at 14 03 04@2x" src="https://user-images.githubusercontent.com/1648941/185232983-d27c0dd8-a070-4c16-9fc8-440acd9dfc63.png">
 
 ## How it works
 All of the data for this application is returned through edge functions from various providers (Cloudflare Workers, Vercel Edge Functions, Netlify Edge Functions). Read more about the benefits of the PlanetScale serverless driver for JavaScript and the next generation of PlanetScale infrastruction in [our latest blog post](https://planetscale.com/blog/introducing-planetscale-serverless-driver-for-javascript). 
