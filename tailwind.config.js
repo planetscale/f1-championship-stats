@@ -42,7 +42,9 @@ module.exports = {
       },
       blue: {
         200: '#a9dffe',
+        400: '#47b7f8',
         500: '#1e9de7',
+        600: '#0b6ec5',
         800: '#0e3682'
       }
     },
@@ -93,7 +95,8 @@ module.exports = {
       spacing: spacing(),
       textColor: {
         primary: 'var(--text-primary)',
-        secondary: 'var(--text-secondary)'
+        secondary: 'var(--text-secondary)',
+        blue: 'var(--text-blue)'
       },
       zIndex: {
         1: '1'
