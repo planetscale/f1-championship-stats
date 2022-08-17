@@ -1,12 +1,14 @@
 # F1 Championship Stats 🏎 
-See how your favorite F1 team is progressing in the Constructors Championship. All data served from the Edge.
+See how your favorite F1 team is progressing in the Constructors Championship using the PlanetScale serverless driver for JavaScript and edge functions.
 
 **Screenshot here**
 
 ## How it works
-All of the data for this application is returned from "the edge". This means the code is executing in the data center nearest to you, reducing the latency of the request.
-Each of these workers connects to a PlanetScale database via [`@planetscale/database`](https://github.com/planetscale/database-js) and returns a JSON payload with F1 stats to render the page.
-You can use these as examples for how to start using your PlanetScale database from an edge worker.
+All of the data for this application is returned through edge functions from various providers (Cloudflare Workers, Vercel Edge Functions, Netlify Edge Functions). Read more about the benefits of the PlanetScale serverless driver for JavaScript and the next generation of PlanetScale infrastruction in [our latest blog post](https://planetscale.com/blog/introducing-planetscale-serverless-driver-for-javascript). 
+
+Each of these edge functions connects to a PlanetScale database via our serverless driver, [`@planetscale/database`](https://github.com/planetscale/database-js), and returns a JSON payload with F1 stats to render the page.
+
+You can use these as examples for how to start using your PlanetScale database from an edge function.
 
 The frontend application is a Next.js app running on Vercel.
 
@@ -20,12 +22,12 @@ npm run dev
 
 Visit [http://localhost:3000](http://localhost:3000) in your browser.
 
-## Edge workers
-To learn more about how to run each worker, visit the subdirectories for each.
+## Edge functions
+To learn more about how to run each function, visit the subdirectories for each:
 
-- [Cloudflare](https://github.com/planetscale/f1-championship-stats/tree/main/workers/cloudflare)
-- [Netlify](https://github.com/planetscale/f1-championship-stats/tree/main/workers/netlify)
-- [Vercel](https://github.com/planetscale/f1-championship-stats/tree/main/workers/vercel)
+- [Cloudflare](https://github.com/planetscale/f1-championship-stats/tree/main/examples/cloudflare)
+- [Vercel](https://github.com/planetscale/f1-championship-stats/tree/main/examples/vercel)
+- [Netlify](https://github.com/planetscale/f1-championship-stats/tree/main/examples/netlify)
 
 ## License
 

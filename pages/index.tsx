@@ -3,12 +3,13 @@ import Head from 'next/head'
 import useSWR from 'swr'
 import { useEffect, useState } from 'react'
 import SVG from 'react-inlinesvg'
+import { useTheme } from 'next-themes'
+import maxBy from 'lodash.maxby'
 
 import LineChart from '@/components/LineChart'
 import StandingsItem from '@/components/StandingsItem'
 
 import { constructorColor, circuitName } from '@/utils/detail'
-
 import { RaceData, Constructor } from '@/utils/types'
 
 async function fetcher<T>(input: RequestInfo, init?: RequestInit): Promise<T> {
@@ -20,20 +21,21 @@ const netlifyUrl = 'https://f1-championship-stats.netlify.app/data.json'
 const vercelUrl = 'https://f1-championship-stats-workers.preview.planetscale.com/api/data.json'
 
 const Home: NextPage = () => {
+  const { resolvedTheme } = useTheme()
   const [edgeFunctionUrl, setEdgeFunctionUrl] = useState(cloudflareUrl)
   const { data, error } = useSWR<RaceData>(edgeFunctionUrl, fetcher)
   const onChange = (event) => setEdgeFunctionUrl(event.target.value)
   const [raceNames, setRaceNames] = useState([])
   const [datasets, setDatasets] = useState([])
   const [raceDates, setRaceDates] = useState([])
-  const [selectedRaceIndex, setSelectedRaceIndex] = useState(datasets[0]?.data.length - 1 ?? -1)
+  const [currentRound, setCurrentRound] = useState(datasets[0]?.data.length - 1 ?? -1)
   const [teams, setTeams] = useState({})
   const [standings, setStandings] = useState([])
   const [lastIndex, setLastIndex] = useState(0)
 
   useEffect(() => {
     const lastIndex = datasets[0]?.data.length - 1
-    setSelectedRaceIndex(lastIndex ?? -1)
+    setCurrentRound(lastIndex ?? -1)
     setLastIndex(lastIndex ?? 0)
   }, [datasets])
 
@@ -69,7 +71,7 @@ const Home: NextPage = () => {
             borderWidth: 2,
             borderColor: constructorColor(key),
             backgroundColor: constructorColor(key),
-            pointBorderColor: '#FFFFFF',
+            pointBorderColor: resolvedTheme === 'light' ? '#FFFFFF' : '#000000',
             pointBorderWidth: 2
           }
         })
@@ -78,13 +80,13 @@ const Home: NextPage = () => {
   }, [data])
 
   useEffect(() => {
-    if (selectedRaceIndex < 0) {
+    if (currentRound < 0) {
       return
     }
 
     const standingsArr = Object.keys(teams).map((key, i) => {
       const team = teams[key]
-      const points = team.points[selectedRaceIndex]
+      const points = team.points[currentRound]
       return {
         position: i + 1,
         points: points,
@@ -105,7 +107,7 @@ const Home: NextPage = () => {
       })
 
     setStandings(newStandings)
-  }, [selectedRaceIndex, teams])
+  }, [currentRound, teams])
 
   if (error) return
 
@@ -117,25 +119,28 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>F1 Championship standings</title>
-        <meta name='description' content='F1 Championship standings' />
+        <title>F1 Constructors Championship standings</title>
+        <meta
+          name='description'
+          content='F1 Constructors Championship standings week-by-week. Powered by edge functions and PlanetScale.'
+        />
         <link rel='icon' href='/favicon.ico' />
       </Head>
 
       <header className='container mx-auto items-end justify-between space-y-2 px-6 pt-8 pb-2 md:flex'>
         <h1 className='text-xl lg:text-2xl'>
-          <span className='block text-[#E20500]'>2022 Formula 1</span>Constructor championship standings
+          <span className='block text-[#E20500]'>2022 Formula 1</span>Constructor championship standings {resolvedTheme}
         </h1>
 
-        <div className='flex rounded-sm border p-1 focus-within:border-blue-500 focus-within:shadow-none focus-within:outline-none focus-within:ring-2 focus-within:ring-blue-200 focus-within:ring-offset-0 focus:!transition-none dark:focus-within:ring-blue-800'>
-          <label className='select-none whitespace-nowrap rounded-xs bg-gray-800 px-1 py-sm text-xs text-white'>
+        <div className='flex rounded border p-1 focus-within:border-blue-500 focus-within:shadow-none focus-within:outline-none focus-within:ring-2 focus-within:ring-blue-200 focus-within:ring-offset-0 focus:!transition-none dark:focus-within:ring-blue-800'>
+          <label className='dark select-none whitespace-nowrap rounded-xs bg-secondary px-1 py-sm text-xs text-primary'>
             Edge function
           </label>
 
           <select
             onChange={onChange}
             defaultValue={cloudflareUrl}
-            className='w-20 flex-1 rounded rounded-l-none rounded-r border border-none py-0 pr-4 pl-2 text-xs !shadow-none !ring-0 focus:border-blue-500 focus:shadow-none focus:outline-none focus:ring-2 focus:ring-blue-200 focus:ring-offset-0 focus:!transition-none dark:focus:ring-blue-800'
+            className='w-20 flex-1 border-none bg-primary py-0 pr-4 pl-2 text-xs !shadow-none !ring-0 focus:border-blue-500 focus:shadow-none focus:outline-none focus:ring-2 focus:ring-blue-200 focus:ring-offset-0 focus:!transition-none dark:focus:ring-blue-800'
           >
             <option value={cloudflareUrl}>Cloudflare</option>
             <option value={netlifyUrl}>Netlify</option>
@@ -144,122 +149,144 @@ const Home: NextPage = () => {
         </div>
       </header>
 
-      <main className='container relative mx-auto px-6 pb-6 lg:pr-8'>
-        <div className='top-1/2 right-5 z-[1] mb-3 space-y-1 rounded-sm bg-gray-800 p-2 font-bold text-white shadow-xl shadow-black/25 lg:absolute lg:w-38 lg:-translate-y-1/2 xl:right-14 2xl:right-20'>
-          {standings.map((standing, i) => (
-            <StandingsItem key={i} standing={standing} />
-          ))}
-        </div>
-
-        <div className='grid translate-x-[18px] translate-y-3 grid-cols-22 whitespace-nowrap pt-1 pb-2 text-2xs sm:translate-x-[19px] md:translate-x-[23px] lg:translate-x-[22px] lg:pb-0 xl:translate-x-[34px] 2xl:translate-x-[46px]'>
-          {raceDates.map((date, i) => (
-            <button
-              key={i}
-              disabled={i > lastIndex}
-              onClick={() => {
-                setSelectedRaceIndex(i)
-              }}
-              className={`lg: flex origin-left translate-x-px -rotate-45 items-center justify-center rounded-sm bg-white py-sm px-2.5 lg:h-4.5 lg:w-4.5 lg:rotate-0 lg:px-0 lg:text-center lg:ring-1 lg:ring-black/[.08] ${
-                i === selectedRaceIndex
-                  ? 'z-[1] bg-gray-850 text-white shadow-lg shadow-black/25 lg:border-transparent'
-                  : 'hover:bg-gray-850 hover:text-white lg:shadow-md lg:shadow-black/5'
-              }`}
-            >
-              <div
-                className={`flex space-x-xs lg:block lg:translate-y-xs ${
-                  i === selectedRaceIndex ? 'lg:text-white' : ''
-                }`}
-              >
-                <div className='text-3xs font-bold leading-none tracking-tighter'>{date.month}</div>
-                <div className='text-3xs font-bold leading-none lg:text-sm lg:font-normal'>{date.day}</div>
-              </div>
-            </button>
-          ))}
-        </div>
-
-        <div className='grid grid-cols-22 grid-rows-[7]'>
-          <div className='col-start-1 col-end-2 row-start-1 row-end-[8]'>
-            <div className='border-b border-r border-b-gray-100 border-r-gray-50 pt-8 text-xs text-gray-500 [border-bottom-style:dashed]'>
-              600
-            </div>
-            <div className='border-b border-r border-b-gray-100 border-r-gray-50 pt-8 text-xs text-gray-500 [border-bottom-style:dashed]'>
-              500
-            </div>
-            <div className='border-b border-r border-b-gray-100 border-r-gray-50 pt-8 text-xs text-gray-500 [border-bottom-style:dashed]'>
-              400
-            </div>
-            <div className='border-b border-r border-b-gray-100 border-r-gray-50 pt-8 text-xs text-gray-500 [border-bottom-style:dashed]'>
-              300
-            </div>
-            <div className='border-b border-r border-b-gray-100 border-r-gray-50 pt-8 text-xs text-gray-500 [border-bottom-style:dashed]'>
-              200
-            </div>
-            <div className='border-b border-r border-b-gray-100 border-r-gray-50 pt-8 text-xs text-gray-500 [border-bottom-style:dashed]'>
-              100
-            </div>
-            <div className='border-b border-r border-b-gray-100 border-r-gray-50 pt-8 text-xs text-gray-500 [border-bottom-style:dashed]'>
-              0
-            </div>
-          </div>
-
-          <div className='col-start-2 col-end-[23] row-start-1 row-end-3'>
-            <div className='grid h-full grid-cols-21'>
-              {[...Array(42)].map((_, i) => (
-                <div
-                  key={i}
-                  className={`border-b border-r border-r-gray-50 border-b-gray-100 [border-bottom-style:dashed] ${
-                    i % 21 === selectedRaceIndex - 1 ? 'border-r-gray-800' : ''
-                  }`}
-                />
+      {data && (
+        <>
+          <main className='container relative mx-auto px-6 pb-6 lg:pr-8'>
+            <div className='dark top-1/2 right-5 z-1 mb-3 space-y-1 rounded bg-secondary p-2 font-bold text-primary shadow-xl shadow-black/25 dark:shadow-black/90 dark:ring-1 dark:ring-white/10 lg:absolute lg:w-38 lg:-translate-y-1/2 xl:right-14 2xl:right-20'>
+              {standings.map((standing, i) => (
+                <StandingsItem key={i} standing={standing} />
               ))}
             </div>
-          </div>
 
-          <div className='relative col-start-2 col-end-[23] row-start-3 row-end-[8]'>
-            <div className='grid h-full grid-cols-21'>
-              {[...Array(105)].map((_, i) => (
+            <div className='grid translate-x-[18px] translate-y-3 grid-cols-22 whitespace-nowrap pt-1 pb-2 text-2xs sm:translate-x-[19px] md:translate-x-[23px] lg:translate-x-[22px] lg:pb-0 xl:translate-x-[34px] 2xl:translate-x-[46px]'>
+              {raceDates.map((date, i) => (
+                <button
+                  key={i}
+                  disabled={i > lastIndex}
+                  onClick={() => {
+                    setCurrentRound(i)
+                  }}
+                  className={`flex origin-left translate-x-px -rotate-45 items-center justify-center rounded bg-primary py-sm px-2.5 lg:h-4.5 lg:w-4.5 lg:rotate-0 lg:px-0 lg:text-center lg:ring-1 lg:ring-black/[.08] lg:dark:ring-white/15 ${
+                    i === currentRound
+                      ? 'z-1 bg-gray-850 text-gray-50 shadow-lg shadow-black/25 dark:bg-gray-50 dark:shadow-black/90 lg:border-transparent'
+                      : 'lg:shadow-md lg:shadow-black/5 lg:dark:shadow-black/90'
+                  }`}
+                >
+                  <div
+                    className={`flex space-x-xs lg:block lg:translate-y-xs ${
+                      i === currentRound ? 'lg:text-gray-50 lg:dark:text-gray-900' : ''
+                    }`}
+                  >
+                    <div className='text-3xs font-bold leading-none tracking-tighter'>{date.month}</div>
+                    <div className='text-3xs font-bold leading-none lg:text-sm lg:font-normal'>{date.day}</div>
+                  </div>
+                </button>
+              ))}
+            </div>
+
+            <div className='grid grid-cols-22 grid-rows-[7]'>
+              <div className='col-start-1 col-end-2 row-start-1 row-end-[8]'>
+                <div className='border-b border-r border-r-gray-50 pt-8 text-xs text-secondary [border-bottom-style:dashed] dark:border-r-gray-850'>
+                  600
+                </div>
+                <div className='border-b border-r border-r-gray-50 pt-8 text-xs text-secondary [border-bottom-style:dashed] dark:border-r-gray-850'>
+                  500
+                </div>
+                <div className='border-b border-r border-r-gray-50 pt-8 text-xs text-secondary [border-bottom-style:dashed] dark:border-r-gray-850'>
+                  400
+                </div>
+                <div className='border-b border-r border-r-gray-50 pt-8 text-xs text-secondary [border-bottom-style:dashed] dark:border-r-gray-850'>
+                  300
+                </div>
+                <div className='border-b border-r border-r-gray-50 pt-8 text-xs text-secondary [border-bottom-style:dashed] dark:border-r-gray-850'>
+                  200
+                </div>
+                <div className='border-b border-r border-r-gray-50 pt-8 text-xs text-secondary [border-bottom-style:dashed] dark:border-r-gray-850'>
+                  100
+                </div>
+                <div className='border-b border-r border-r-gray-50 pt-8 text-xs text-secondary [border-bottom-style:dashed] dark:border-r-gray-850'>
+                  0
+                </div>
+              </div>
+
+              <div className='col-start-2 col-end-[23] row-start-1 row-end-3'>
+                <div className='grid h-full grid-cols-21'>
+                  {[...Array(42)].map((_, i) => (
+                    <div
+                      key={i}
+                      className={`border-b border-r border-r-gray-50 [border-bottom-style:dashed] dark:border-r-gray-850 ${
+                        i % 21 === currentRound - 1 ? 'border-r-gray-800 dark:border-r-gray-100' : ''
+                      }`}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              <div className='relative col-start-2 col-end-[23] row-start-3 row-end-[8]'>
+                <div className='grid h-full grid-cols-21'>
+                  {[...Array(105)].map((_, i) => (
+                    <div
+                      key={i}
+                      className={`relative border-b border-r border-r-gray-50 [border-bottom-style:dashed] dark:border-r-gray-850 ${
+                        i % 21 === currentRound - 1
+                          ? 'border-r-gray-800 after:absolute after:-bottom-2 after:-right-px after:block after:h-2 after:w-px after:bg-gray-800 dark:border-r-gray-100 dark:after:bg-gray-100'
+                          : ''
+                      }`}
+                    />
+                  ))}
+                </div>
+
+                <div className='absolute -inset-x-[6px] -inset-y-[5px]'>
+                  <LineChart chartData={chartData} />
+                </div>
+              </div>
+            </div>
+
+            <div className='grid grid-cols-22 justify-items-end whitespace-nowrap pt-1 pb-6 text-2xs text-gray-600'>
+              {raceNames.map((name, i) => (
                 <div
                   key={i}
-                  className={`relative border-b border-r border-r-gray-50 border-b-gray-100 [border-bottom-style:dashed] ${
-                    i % 21 === selectedRaceIndex - 1
-                      ? 'border-r-gray-800 after:absolute after:-bottom-2 after:-right-px after:block after:h-2 after:w-px after:bg-gray-800'
+                  className={`origin-top-right -translate-x-px -rotate-45 py-xs px-[6px] ${
+                    i === currentRound
+                      ? 'z-1 rounded bg-gray-850 font-bold tracking-tighter shadow-lg shadow-black/25 dark:bg-gray-50 dark:shadow-black/90 lg:border-transparent lg:text-gray-50 lg:dark:text-gray-900'
                       : ''
                   }`}
-                />
+                >
+                  {name}
+                </div>
               ))}
             </div>
+          </main>
 
-            <div className='absolute -inset-x-[6px] -inset-y-[5px]'>
-              <LineChart chartData={chartData} />
-            </div>
-          </div>
-        </div>
+          <section className='container mx-auto px-6 pt-2 pb-8'>
+            <p className='mt-4'>
+              See the progress week-by-week of your favorite F1 team in the Constructors Championship.
+            </p>
+            <h3 className='mt-2 text-xl'>How this works</h3>
+            <p>
+              This app is powered by edge functions and a PlanetScale database. Each edge function uses{' '}
+              <a className='text-blue' href='https://github.com/planetscale/database-js'>
+                @planetscale/database
+              </a>{' '}
+              to query data over HTTP.
+            </p>
+            <p>
+              Use the drop down to swap between different edge functions. See the source for each function{' '}
+              <a href='https://github.com/planetscale/f1-championship-stats/tree/main/edge-functions'>here</a>.
+            </p>
+          </section>
 
-        <div className='grid grid-cols-22 justify-items-end whitespace-nowrap pt-1 pb-6 text-2xs text-gray-600'>
-          {raceNames.map((name, i) => (
-            <div
-              key={i}
-              className={`origin-top-right -translate-x-px -rotate-45 py-xs px-[6px] ${
-                i === selectedRaceIndex
-                  ? 'rounded-sm bg-gray-850 font-bold tracking-tighter text-white shadow-lg shadow-black/25'
-                  : ''
-              }`}
-            >
-              {name}
-            </div>
-          ))}
-        </div>
-      </main>
+          <footer className='container mx-auto mt-2 flex items-center justify-between px-6 pb-8'>
+            <a className='flex items-center space-x-1' href='http://www.planetscale.com'>
+              <span>Powered by</span> <SVG src='planetscale.svg' />
+            </a>
 
-      <footer className='container mx-auto mt-2 flex items-center justify-between px-6 pb-8'>
-        <a className='flex items-center space-x-1' href='http://www.planetscale.com'>
-          <span>Powered by</span> <SVG src='planetscale.svg' />
-        </a>
-
-        <a className='flex items-center space-x-1' href='https://github.com/planetscale/f1-championship-stats'>
-          <span>View on</span> <SVG src='github-icon.svg' />
-        </a>
-      </footer>
+            <a className='flex items-center space-x-1' href='https://github.com/planetscale/f1-championship-stats'>
+              <span>View on</span> <SVG src='github-icon.svg' />
+            </a>
+          </footer>
+        </>
+      )}
     </>
   )
 }
