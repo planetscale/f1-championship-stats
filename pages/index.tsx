@@ -6,60 +6,12 @@ import SVG from 'react-inlinesvg'
 import LineChart from '@/components/LineChart'
 import StandingsItem from '@/components/StandingsItem'
 
-type RaceData = {
-  races: Race[]
-  results: RaceResult[]
-  standings: Standing[]
-}
+import { constructorColor, circuitName } from '@/utils/detail'
 
-type Race = {
-  id: number
-  season: number
-  round: number
-  race_name: string
-  date: string
-}
-
-type Standing = {
-  season: number
-  teamId: string
-  name: string
-  position: number
-  points: number
-  wins: number
-}
-
-type RaceResult = {
-  name: string
-  nationality: string
-  points: number
-  position: number
-  race_name: string
-  round: number
-  teamId: string
-  url: string
-}
-
-type Constructor = {
-  teamName: string
-  points: any[]
-}
+import { RaceData, Constructor } from '@/utils/types'
 
 function fetcher<T>(input: RequestInfo, init?: RequestInit): Promise<T> {
   return fetch(input, init).then((res) => res.json())
-}
-
-export const constructorColor = {
-  alfa: '#A32F3C',
-  alphatauri: '#587B98',
-  alpine: '#4891CC',
-  aston_martin: '#46806E',
-  ferrari: '#ED1D25',
-  haas: '#B7B9BC',
-  mclaren: '#E6863B',
-  mercedes: '#6BD4BF',
-  red_bull: '#2F5ABF',
-  williams: '#63BBD9'
 }
 
 const Home: NextPage = () => {
@@ -70,31 +22,6 @@ const Home: NextPage = () => {
   let raceNames = []
   const datasets = []
 
-  const circuitName = {
-    'Bahrain Grand Prix': 'Bahrain',
-    'Saudi Arabian Grand Prix': 'Jeddah',
-    'Australian Grand Prix': 'Melbourne',
-    'Emilia Romagna Grand Prix': 'Imola',
-    'Miami Grand Prix': 'Miami',
-    'Spanish Grand Prix': 'Catalunya',
-    'Monaco Grand Prix': 'Monaco',
-    'Azerbaijan Grand Prix': 'Baku',
-    'Canadian Grand Prix': 'Montreal',
-    'British Grand Prix': 'Silverstone',
-    'Austrian Grand Prix': 'Spielberg',
-    'French Grand Prix': 'Paul Ricard',
-    'Hungarian Grand Prix': 'Hungaroring',
-    'Belgian Grand Prix': 'Spa',
-    'Dutch Grand Prix': 'Zandvort',
-    'Italian Grand Prix': 'Monza',
-    'Singapore Grand Prix': 'Marina Bay',
-    'Japanese Grand Prix': 'Suzuka',
-    'United States Grand Prix': 'Austin',
-    'Mexico City Grand Prix': 'Mexico City',
-    'Brazilian Grand Prix': 'Sao Paulo',
-    'Abu Dhabi Grand Prix': 'Yas Marina'
-  }
-
   const f = new Intl.DateTimeFormat('en-us', { month: 'short', day: 'numeric', timeZone: 'UTC' })
   const raceDates: Array<Record<string, string>> =
     data?.races.map((item) => {
@@ -102,7 +29,7 @@ const Home: NextPage = () => {
     }) ?? []
 
   if (data) {
-    raceNames = data.races.map((item) => circuitName[item.race_name])
+    raceNames = data.races.map((item) => circuitName(item.race_name))
 
     const teams: Record<string, Constructor> = data.results.reduce((acc, item) => {
       if (!acc[item.teamId]) {
@@ -119,8 +46,8 @@ const Home: NextPage = () => {
         data: team.points,
         fill: false,
         borderWidth: 2,
-        borderColor: constructorColor[key],
-        backgroundColor: constructorColor[key],
+        borderColor: constructorColor(key),
+        backgroundColor: constructorColor(key),
         pointBorderColor: '#FFFFFF',
         pointBorderWidth: 2
       })
