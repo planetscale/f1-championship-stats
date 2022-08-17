@@ -5,7 +5,7 @@ It has two parts: a `cron` that runs to update the database with stats. And a `d
 ## Setup
 1. Run `npm install`.
 2. Create a PlanetScale database to store the stats. Add the schema shown below.
-3. Enroll your new database in the **PlanetScale serverless driver for JavaScript** beta.
+3. Enroll your new database in the **PlanetScale serverless driver for JavaScript** beta (under your database's **Settings** > **Beta features** section).
 3. Create a PlanetScale password and add the new credentials as secrets:
 - `npx wrangler secret put PSCALE_HOST`
 - `npx wrangler secret put PSCALE_PASSWORD`
