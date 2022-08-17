@@ -1,5 +1,3 @@
-import { useEffect, useRef } from 'react'
-
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -25,14 +23,6 @@ type Props = {
 }
 
 const LineChart: React.FC<Props> = ({ chartData }) => {
-  const chartRef = useRef(null)
-
-  useEffect(() => {
-    if (chartRef.current) {
-      console.log(chartRef)
-    }
-  }, [])
-
   const options = {
     events: [],
     maintainAspectRatio: false,
@@ -57,7 +47,7 @@ const LineChart: React.FC<Props> = ({ chartData }) => {
     }
   }
 
-  return <Line data={chartData} options={options} ref={chartRef} />
+  return <Line data={chartData} options={options} />
 }
 
 export default LineChart

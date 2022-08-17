@@ -1,0 +1,17 @@
+<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .favicon {
+      fill: #111111;
+    }
+    @media (prefers-color-scheme: dark) {
+      .favicon {
+        fill: #fafafa;
+      }
+    }
+  </style>
+  <path
+    class="favicon"
+    d="M0 8C3.76127e-07 3.58172 3.58172 -3.76127e-07 8 0C11.2486 2.83999e-07 14.0449 1.93629 15.2978 4.71772L4.71772 15.2978C4.2637 15.0933 3.8322 14.8477 3.42796 14.5656L9.9936 8H8L2.34315 13.6569C0.895431 12.2091 -1.93129e-07 10.2091 0 8Z"
+  />
+  <path class="favicon" d="M16 8.00275L8.00276 16C12.4188 15.9985 15.9985 12.4188 16 8.00275Z" />
+</svg>
