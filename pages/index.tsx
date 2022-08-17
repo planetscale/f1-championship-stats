@@ -22,8 +22,8 @@ const vercelUrl = 'https://f1-championship-stats-workers.preview.planetscale.com
 
 const Home: NextPage = () => {
   const { resolvedTheme } = useTheme()
-  const { data, error } = useSWR<RaceData>('https://f1-championship-stats.mike.workers.dev/data.json', fetcher)
   const [edgeFunctionUrl, setEdgeFunctionUrl] = useState(cloudflareUrl)
+  const { data, error } = useSWR<RaceData>(edgeFunctionUrl, fetcher)
   const onChange = (event) => setEdgeFunctionUrl(event.target.value)
 
   if (error) return
@@ -75,8 +75,11 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>F1 Championship standings</title>
-        <meta name='description' content='F1 Championship standings' />
+        <title>F1 Constructors Championship standings</title>
+        <meta
+          name='description'
+          content='F1 Constructors Championship standings week-by-week. Powered by edge functions and PlanetScale.'
+        />
         <link rel='icon' href='/favicon.ico' />
       </Head>
 
@@ -91,7 +94,8 @@ const Home: NextPage = () => {
           </label>
 
           <select
-            onChange={onChange} defaultValue={cloudflareUrl}
+            onChange={onChange}
+            defaultValue={cloudflareUrl}
             className='w-20 flex-1 border-none bg-primary py-0 pr-4 pl-2 text-xs !shadow-none !ring-0 focus:border-blue-500 focus:shadow-none focus:outline-none focus:ring-2 focus:ring-blue-200 focus:ring-offset-0 focus:!transition-none dark:focus:ring-blue-800'
           >
             <option value={cloudflareUrl}>Cloudflare</option>
@@ -190,13 +194,13 @@ const Home: NextPage = () => {
               </div>
             </div>
 
-            <div className='grid grid-cols-22 justify-items-end whitespace-nowrap pt-1 pb-6 text-2xs text-secondary'>
+            <div className='grid grid-cols-22 justify-items-end whitespace-nowrap pt-1 pb-6 text-2xs text-gray-600'>
               {raceNames.map((name, i) => (
                 <div
                   key={i}
                   className={`origin-top-right -translate-x-px -rotate-45 py-xs px-[6px] ${
                     i === currentRound
-                      ? 'rounded bg-gray-850 font-bold tracking-tighter text-gray-50 shadow-lg shadow-black/25 dark:bg-gray-50 dark:text-gray-900 dark:shadow-black/90'
+                      ? 'z-1 rounded bg-gray-850 font-bold tracking-tighter shadow-lg shadow-black/25 dark:bg-gray-50 dark:shadow-black/90 lg:border-transparent lg:text-gray-50 lg:dark:text-gray-900'
                       : ''
                   }`}
                 >
@@ -205,6 +209,24 @@ const Home: NextPage = () => {
               ))}
             </div>
           </main>
+
+          <section className='container mx-auto px-6 pt-2 pb-8'>
+            <p className='mt-4'>
+              See the progress week-by-week of your favorite F1 team in the Constructors Championship.
+            </p>
+            <h3 className='mt-2 text-xl'>How this works</h3>
+            <p>
+              This app is powered by edge functions and a PlanetScale database. Each edge function uses{' '}
+              <a className='text-blue' href='https://github.com/planetscale/database-js'>
+                @planetscale/database
+              </a>{' '}
+              to query data over HTTP.
+            </p>
+            <p>
+              Use the drop down to swap between different edge functions. See the source for each function{' '}
+              <a href='https://github.com/planetscale/f1-championship-stats/tree/main/edge-functions'>here</a>.
+            </p>
+          </section>
 
           <footer className='container mx-auto mt-2 flex items-center justify-between px-6 pb-8'>
             <a className='flex items-center space-x-1' href='http://www.planetscale.com'>
