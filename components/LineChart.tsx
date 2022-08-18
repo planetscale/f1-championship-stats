@@ -22,40 +22,10 @@ type Props = {
   chartData: ChartData
 }
 
-const LineChart: React.FC<Props> = ({ chartData }) => {
-  const animation = buildAnimation()
+const delayBetweenPoints = 25
 
-  const options = {
-    animation: animation,
-    events: [],
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        display: false
-      }
-    },
-    scales: {
-      xAxis: {
-        display: false
-      },
-      yAxis: {
-        display: false,
-        ticks: {
-          maxTicksLimit: 7
-        }
-      }
-    }
-  }
-
-  return <Line data={chartData} options={options} />
-}
-
-export default LineChart
-
-const buildAnimation = () => {
-  const delayBetweenPoints = 25
-
-  const animation = {
+const options: any = {
+  animation: {
     x: {
       type: 'number',
       easing: 'linear',
@@ -80,8 +50,30 @@ const buildAnimation = () => {
         ctx.yStarted = true
         return ctx.index * delayBetweenPoints
       }
+    }
+  },
+  events: [],
+  maintainAspectRatio: false,
+  plugins: {
+    legend: {
+      display: false
+    }
+  },
+  scales: {
+    xAxis: {
+      display: false
     },
+    yAxis: {
+      display: false,
+      ticks: {
+        maxTicksLimit: 7
+      }
+    }
   }
-
-  return animation
 }
+
+const LineChart: React.FC<Props> = ({ chartData }) => {
+  return <Line data={chartData} options={options} />
+}
+
+export default LineChart

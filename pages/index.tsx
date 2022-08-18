@@ -22,8 +22,8 @@ const vercelUrl = 'https://f1-championship-stats-workers.preview.planetscale.com
 const Home: NextPage = () => {
   const { resolvedTheme } = useTheme()
   const [edgeFunctionUrl, setEdgeFunctionUrl] = useState(cloudflareUrl)
+  const [lineChartMemoizeKey, setLineChartMemoizeKey] = useState(0)
   const { data, error } = useSWR<RaceData>(edgeFunctionUrl, fetcher)
-  const onChange = (event) => setEdgeFunctionUrl(event.target.value)
   const [raceNames, setRaceNames] = useState([])
   const [datasets, setDatasets] = useState([])
   const [raceDates, setRaceDates] = useState([])
@@ -140,7 +140,10 @@ const Home: NextPage = () => {
           </label>
 
           <select
-            onChange={onChange}
+            onChange={(event) => {
+              setEdgeFunctionUrl(event.target.value)
+              setLineChartMemoizeKey(lineChartMemoizeKey + 1)
+            }}
             defaultValue={cloudflareUrl}
             className='w-20 flex-1 border-none bg-primary py-0 pr-4 pl-2 text-xs !shadow-none !ring-0 focus:border-blue-500 focus:shadow-none focus:outline-none focus:ring-2 focus:ring-blue-200 focus:ring-offset-0 focus:!transition-none dark:focus:ring-blue-800'
           >
@@ -239,7 +242,7 @@ const Home: NextPage = () => {
                 </div>
 
                 <div className='absolute -inset-x-[6px] -inset-y-[5px]'>
-                  <LineChart chartData={chartData} />
+                  <LineChart chartData={chartData} key={lineChartMemoizeKey} />
                 </div>
               </div>
             </div>
