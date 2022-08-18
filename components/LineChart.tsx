@@ -23,12 +23,12 @@ type Props = {
 }
 
 const LineChart: React.FC<Props> = ({ chartData }) => {
+  const animation = buildAnimation()
+
   const options = {
+    animation: animation,
     events: [],
     maintainAspectRatio: false,
-    animation: {
-      duration: 0
-    },
     plugins: {
       legend: {
         display: false
@@ -51,3 +51,37 @@ const LineChart: React.FC<Props> = ({ chartData }) => {
 }
 
 export default LineChart
+
+const buildAnimation = () => {
+  const delayBetweenPoints = 25
+
+  const animation = {
+    x: {
+      type: 'number',
+      easing: 'linear',
+      duration: delayBetweenPoints,
+      from: NaN, // the point is initially skipped
+      delay(ctx) {
+        if (ctx.type !== 'data' || ctx.xStarted) {
+          return 0
+        }
+        ctx.xStarted = true
+        return ctx.index * delayBetweenPoints
+      }
+    },
+    y: {
+      type: 'number',
+      easing: 'linear',
+      duration: delayBetweenPoints,
+      delay(ctx) {
+        if (ctx.type !== 'data' || ctx.yStarted) {
+          return 0
+        }
+        ctx.yStarted = true
+        return ctx.index * delayBetweenPoints
+      }
+    },
+  }
+
+  return animation
+}

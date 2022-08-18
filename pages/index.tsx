@@ -270,10 +270,7 @@ const Home: NextPage = () => {
                 </a>{' '}
                 to query data over HTTP. Use the drop down to swap between different edge functions. See the source for
                 each function{' '}
-                <a
-                  href='https://github.com/planetscale/f1-championship-stats/tree/main/examples'
-                  className='text-blue'
-                >
+                <a href='https://github.com/planetscale/f1-championship-stats/tree/main/examples' className='text-blue'>
                   here
                 </a>
                 .
