@@ -282,7 +282,7 @@ const Home: NextPage = () => {
           </section>
 
           <footer className='container mx-auto mt-2 flex items-center justify-between px-3 pb-8 md:px-6'>
-            <a href='http://www.planetscale.com' className='flex items-center space-x-1 font-semibold'>
+            <a href='https://planetscale.com' className='flex items-center space-x-1 font-semibold'>
               <span>Powered by</span> <SVG src='planetscale.svg' />
             </a>
 
