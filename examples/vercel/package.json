@@ -7,7 +7,7 @@
     "format": "prettier --write ."
   },
   "dependencies": {
-    "@planetscale/database": "^0.6.1"
+    "@planetscale/database": "^1.0.1"
   },
   "devDependencies": {
     "@planetscale/core-prettier": "^1.0.1",
