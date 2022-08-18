@@ -156,7 +156,7 @@ const Home: NextPage = () => {
 
       {data && (
         <>
-          <main className='container relative mx-auto px-3 pb-6 font-brand md:px-6 lg:pr-8'>
+          <main className='container relative mx-auto overflow-hidden px-3 pb-6 font-brand md:px-6 lg:pr-8'>
             <div className='dark top-1/2 right-5 z-1 mb-3 space-y-1 rounded bg-secondary p-2 font-bold text-primary shadow-xl shadow-black/25 supports-bg-blur:bg-black/90 supports-bg-blur:backdrop-blur-sm dark:shadow-black/90 dark:ring-1 dark:ring-white/10 supports-bg-blur:dark:bg-gray-850/60 lg:absolute lg:w-38 lg:-translate-y-1/2 xl:right-14 2xl:right-20'>
               {standings.map((standing, i) => (
                 <StandingsItem key={i} standing={standing} />
@@ -266,7 +266,7 @@ const Home: NextPage = () => {
           <section className='container mx-auto px-3 pt-2 pb-6 md:px-6'>
             <div className='space-y-1 border-y py-3'>
               <h3 className='text-sm font-semibold'>How this works</h3>
-              <p className='w-3/4'>
+              <p className='lg:w-3/4'>
                 This is powered by edge functions and a PlanetScale database. Each edge function uses{' '}
                 <a href='https://github.com/planetscale/database-js' className='text-blue'>
                   @planetscale/database
@@ -281,7 +281,7 @@ const Home: NextPage = () => {
             </div>
           </section>
 
-          <footer className='container mx-auto mt-2 flex items-center justify-between px-3 pb-8 md:px-6'>
+          <footer className='container mx-auto mt-2 items-center justify-between space-y-2 px-3 pb-8 sm:flex sm:space-y-0 md:px-6'>
             <a href='https://planetscale.com' className='flex items-center space-x-1 font-semibold'>
               <span>Powered by</span> <SVG src='planetscale.svg' />
             </a>
