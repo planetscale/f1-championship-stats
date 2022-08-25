@@ -14,6 +14,6 @@
     "format": "prettier --write ."
   },
   "dependencies": {
-    "@planetscale/database": "^1.0.1"
+    "@planetscale/database": "^1.1"
   }
 }
