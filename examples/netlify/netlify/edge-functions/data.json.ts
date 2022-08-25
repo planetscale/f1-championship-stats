@@ -1,5 +1,5 @@
 import type { Context } from 'https://edge.netlify.com'
-import { connect } from 'https://unpkg.com/@planetscale/database@^0.6.1'
+import { connect } from 'https://unpkg.com/@planetscale/database@^1.1'
 
 const CURRENT_YEAR = 2022
 
