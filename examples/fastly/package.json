@@ -1,0 +1,15 @@
+{
+    "scripts": {
+        "prebuild": "esbuild src/index.js --target=es2020 --platform=browser --bundle --outfile=bin/index.js",
+        "build": "js-compute-runtime bin/index.js bin/main.wasm",
+        "deploy": "fastly compute publish",
+        "dev": "fastly compute serve"
+    },
+    "devDependencies": {
+        "@fastly/js-compute": "^0.5.1",
+        "esbuild": "^0.15.5"
+    },
+    "dependencies": {
+        "@planetscale/database": "^1.0.1"
+    }
+}

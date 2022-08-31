@@ -1,0 +1,18 @@
+{
+  "name": "f1-championship-stats",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "deploy": "vercel deploy",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "@planetscale/database": "^1.0.1"
+  },
+  "devDependencies": {
+    "@planetscale/core-prettier": "^1.0.1",
+    "prettier": "^2.7.1",
+    "typescript": "4.7.4",
+    "vercel": "28.1.0"
+  }
+}

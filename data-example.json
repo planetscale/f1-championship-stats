@@ -1,0 +1,33 @@
+{
+  "races": [
+    {
+      "id": 106,
+      "season": 2022,
+      "round": 1,
+      "race_name": "Bahrain Grand Prix",
+      "date": "2022-03-20",
+      "month": "Mar",
+      "day": "20"
+    }
+  ],
+  "results": [
+    {
+      "name": "Red Bull",
+      "nationality": "Austrian",
+      "points": 0,
+      "position": 10,
+      "race_name": "Bahrain Grand Prix",
+      "round": 1,
+      "teamId": "red_bull",
+      "url": "http://en.wikipedia.org/wiki/Red_Bull_Racing"
+    }
+  ],
+  "standings": [
+    {
+      "position": 1,
+      "race_name": "Bahrain Grand Prix",
+      "points_totals": 431,
+      "current_week": 13
+    }
+  ]
+}

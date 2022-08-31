@@ -1,0 +1,19 @@
+{
+  "name": "f1-championship-stats",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "netlify dev",
+    "deploy": "netlify deploy --prod",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "@planetscale/core-prettier": "^1.0.1",
+    "netlify-cli": "10.17.8",
+    "prettier": "^2.7.1",
+    "typescript": "4.7.4"
+  },
+  "dependencies": {
+    "@planetscale/database": "^1.0.1"
+  }
+}
