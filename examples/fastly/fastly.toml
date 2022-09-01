@@ -1,0 +1,37 @@
+# This file describes a Fastly Compute@Edge package. To learn more visit:
+# https://developer.fastly.com/reference/fastly-toml/
+
+language = "javascript"
+manifest_version = 2
+name = "fastly planetscale f1"
+service_id = ""
+
+[local_server.backends.psdb]
+url = "https://aws.connect.psdb.cloud"
+
+[local_server.dictionaries.secrets]
+format = "inline-toml"
+
+  [local_server.dictionaries.secrets.contents]
+  "PSCALE_HOST" = ""
+  "PSCALE_USERNAME" = ""
+  "PSCALE_PASSWORD" = ""
+
+[setup.backends.psdb]
+address = "aws.connect.psdb.cloud"
+port = 443
+
+[setup.dictionaries.secrets]
+description = "secret values"
+
+  [setup.dictionaries.secrets.items.PSCALE_HOST]
+  value = ""
+  description = "The host for PlanetScale E.G. https://aws.connect.psdb.cloud"
+  
+  [setup.dictionaries.secrets.items.PSCALE_USERNAME]
+  value = ""
+  description = "The username for the PlanetScale database"
+  
+  [setup.dictionaries.secrets.items.PSCALE_PASSWORD]
+  value = ""
+  description = "The password for the PlanetScale database"
