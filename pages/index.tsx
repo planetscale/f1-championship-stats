@@ -16,6 +16,7 @@ async function fetcher<T>(input: RequestInfo, init?: RequestInit): Promise<T> {
 }
 
 const cloudflareUrl = 'https://f1-championship-stats.mike.workers.dev/data.json'
+const fastlyUrl = 'https://f1-planetscale.edgecompute.app/data.json'
 const netlifyUrl = 'https://f1-championship-stats.netlify.app/data.json'
 const vercelUrl = 'https://f1-championship-stats-workers.preview.planetscale.com/api/data.json'
 
@@ -148,6 +149,7 @@ const Home: NextPage = () => {
             className='w-20 flex-1 border-none bg-primary py-0 pr-4 pl-2 text-xs !shadow-none !ring-0 focus:border-blue-500 focus:shadow-none focus:outline-none focus:ring-2 focus:ring-blue-200 focus:ring-offset-0 focus:!transition-none dark:focus:ring-blue-800'
           >
             <option value={cloudflareUrl}>Cloudflare</option>
+            <option value={fastlyUrl}>Fastly</option>
             <option value={netlifyUrl}>Netlify</option>
             <option value={vercelUrl}>Vercel</option>
           </select>
