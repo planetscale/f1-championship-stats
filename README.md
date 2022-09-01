@@ -28,8 +28,9 @@ Visit [http://localhost:3000](http://localhost:3000) in your browser.
 To learn more about how to run each function, visit the subdirectories for each:
 
 - [Cloudflare](https://github.com/planetscale/f1-championship-stats/tree/main/examples/cloudflare)
-- [Vercel](https://github.com/planetscale/f1-championship-stats/tree/main/examples/vercel)
+- [Fastly](https://github.com/planetscale/f1-championship-stats/tree/main/examples/fastly)
 - [Netlify](https://github.com/planetscale/f1-championship-stats/tree/main/examples/netlify)
+- [Vercel](https://github.com/planetscale/f1-championship-stats/tree/main/examples/vercel)
 
 ## Thank you :heart:
 The F1 stats shown in this application are from the [Ergast Developer API](http://ergast.com/mrd/).
