@@ -159,7 +159,7 @@ const Home: NextPage = () => {
       {data && (
         <>
           <main className='container relative mx-auto overflow-hidden px-3 pb-6 font-brand md:px-6 lg:pr-8'>
-            <div className='dark top-1/2 right-5 z-1 mb-3 space-y-1 rounded bg-secondary p-2 font-bold text-primary shadow-xl shadow-black/25 supports-bg-blur:bg-black/90 supports-bg-blur:backdrop-blur-sm dark:shadow-black/90 dark:ring-1 dark:ring-white/10 supports-bg-blur:dark:bg-gray-850/60 lg:absolute lg:w-38 lg:-translate-y-1/2 xl:right-14 2xl:right-20'>
+            <div className='dark top-1/2 right-3 z-1 mb-3 space-y-1 rounded bg-secondary p-2 font-bold text-primary shadow-xl shadow-black/25 supports-bg-blur:bg-black/90 supports-bg-blur:backdrop-blur-sm dark:shadow-black/90 dark:ring-1 dark:ring-white/10 supports-bg-blur:dark:bg-gray-850/60 lg:absolute lg:w-38 lg:-translate-y-1/2 xl:right-12 2xl:right-16'>
               {standings.map((standing, i) => (
                 <StandingsItem key={i} standing={standing} />
               ))}
@@ -216,9 +216,9 @@ const Home: NextPage = () => {
                 </div>
               </div>
 
-              <div className='col-start-2 col-end-[23] row-start-1 row-end-3'>
+              <div className='col-start-2 col-end-[23] row-start-1 row-end-2'>
                 <div className='grid h-full grid-cols-21'>
-                  {[...Array(42)].map((_, i) => (
+                  {[...Array(21)].map((_, i) => (
                     <div
                       key={i}
                       className={`border-b border-r border-r-gray-50 [border-bottom-style:dashed] dark:border-r-gray-850 ${
@@ -229,9 +229,9 @@ const Home: NextPage = () => {
                 </div>
               </div>
 
-              <div className='relative col-start-2 col-end-[23] row-start-3 row-end-[8]'>
+              <div className='relative col-start-2 col-end-[23] row-start-2 row-end-[8]'>
                 <div className='grid h-full grid-cols-21'>
-                  {[...Array(105)].map((_, i) => (
+                  {[...Array(126)].map((_, i) => (
                     <div
                       key={i}
                       className={`relative border-b border-r border-r-gray-50 [border-bottom-style:dashed] dark:border-r-gray-850 ${
