@@ -159,7 +159,7 @@ const Home: NextPage = () => {
       {data && (
         <>
           <main className='container relative mx-auto overflow-hidden px-3 pb-6 font-brand md:px-6 lg:pr-8'>
-            <div className='dark top-1/2 right-3 z-1 mb-3 space-y-1 rounded bg-secondary p-2 font-bold text-primary shadow-xl shadow-black/25 supports-bg-blur:bg-black/90 supports-bg-blur:backdrop-blur-sm dark:shadow-black/90 dark:ring-1 dark:ring-white/10 supports-bg-blur:dark:bg-gray-850/60 lg:absolute lg:w-38 lg:-translate-y-1/2 xl:right-12 2xl:right-16'>
+            <div className='dark top-12 left-14 z-1 mb-3 space-y-1 rounded bg-secondary p-1 font-bold text-primary shadow-xl shadow-black/25 supports-bg-blur:bg-black/90 supports-bg-blur:backdrop-blur-sm dark:shadow-black/90 dark:ring-1 dark:ring-white/10 supports-bg-blur:dark:bg-gray-850/60 lg:absolute lg:w-32 lg:p-1.5 xl:w-38 2xl:left-18 2xl:top-14'>
               {standings.map((standing, i) => (
                 <StandingsItem key={i} standing={standing} />
               ))}
