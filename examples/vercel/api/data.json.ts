@@ -4,7 +4,7 @@ export const config = {
   runtime: 'experimental-edge'
 }
 
-const CURRENT_YEAR = 2022
+const CURRENT_YEAR = 2023
 
 const db = new Client({
   url: process.env['DATABASE_URL']
