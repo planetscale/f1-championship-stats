@@ -1,7 +1,7 @@
 import type { Context } from 'https://edge.netlify.com'
 import { connect } from 'https://unpkg.com/@planetscale/database@^1.1'
 
-const CURRENT_YEAR = 2022
+const CURRENT_YEAR = 2023
 
 export default async function handler(req: Request, context: Context) {
   const conn = connect({ url: Deno.env.get('DATABASE_URL') })

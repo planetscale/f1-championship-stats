@@ -6,7 +6,7 @@ export interface Env {
   PSCALE_PASSWORD: string
 }
 
-const CURRENT_YEAR = 2022
+const CURRENT_YEAR = 2023
 
 const Worker = {
   async fetch(request: Request, env: Env, _ctx: ExecutionContext): Promise<Response> {

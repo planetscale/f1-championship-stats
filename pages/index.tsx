@@ -130,7 +130,7 @@ const Home: NextPage = () => {
       <header className='container mx-auto items-end justify-between space-y-2 px-3 pt-4 pb-4 md:flex md:px-6 md:pb-2 md:pt-8'>
         <h1 className='text-xl font-semibold lg:text-2xl'>
           <span className='block font-brand leading-none tracking-tighter'>
-            2022 <span className='text-[#E20500]'>Formula 1</span>
+            2023 <span className='text-[#E20500]'>Formula 1</span>
           </span>
           Constructor championship standings
         </h1>
