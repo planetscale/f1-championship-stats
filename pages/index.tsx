@@ -164,7 +164,7 @@ const Home: NextPage = () => {
               ))}
             </div>
 
-            <div className='grid translate-x-[18px] translate-y-3 grid-cols-22 whitespace-nowrap pt-1 pb-2 text-2xs sm:translate-x-[19px] md:translate-x-[23px] lg:translate-x-[22px] lg:pb-0 xl:translate-x-[34px] 2xl:translate-x-[46px]'>
+            <div className='grid translate-x-[18px] translate-y-3 grid-cols-26 whitespace-nowrap pt-1 pb-2 text-2xs sm:translate-x-[19px] md:translate-x-[23px] lg:translate-x-[22px] lg:pb-0 xl:translate-x-[34px] 2xl:translate-x-[46px]'>
               {raceDates.map((date, i) => (
                 <button
                   key={i}
@@ -190,7 +190,7 @@ const Home: NextPage = () => {
               ))}
             </div>
 
-            <div className='grid grid-cols-22 grid-rows-[7]'>
+            <div className='grid grid-cols-26 grid-rows-[7]'>
               <div className='col-start-1 col-end-2 row-start-1 row-end-[8]'>
                 <div className='border-b border-r border-r-gray-50 pt-8 text-xs text-secondary [border-bottom-style:dashed] dark:border-r-gray-850'>
                   600
@@ -216,7 +216,7 @@ const Home: NextPage = () => {
               </div>
 
               <div className='col-start-2 col-end-[23] row-start-1 row-end-2'>
-                <div className='grid h-full grid-cols-21'>
+                <div className='grid h-full grid-cols-25'>
                   {[...Array(21)].map((_, i) => (
                     <div
                       key={i}
@@ -229,7 +229,7 @@ const Home: NextPage = () => {
               </div>
 
               <div className='relative col-start-2 col-end-[23] row-start-2 row-end-[8]'>
-                <div className='grid h-full grid-cols-21'>
+                <div className='grid h-full grid-cols-25'>
                   {[...Array(126)].map((_, i) => (
                     <div
                       key={i}
@@ -248,7 +248,7 @@ const Home: NextPage = () => {
               </div>
             </div>
 
-            <div className='grid grid-cols-22 justify-items-end whitespace-nowrap pt-1 pb-6 text-2xs text-gray-600'>
+            <div className='grid grid-cols-26 justify-items-end whitespace-nowrap pt-1 pb-6 text-2xs text-gray-600'>
               {raceNames.map((name, i) => (
                 <div
                   key={i}
