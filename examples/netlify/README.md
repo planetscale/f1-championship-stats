@@ -1,6 +1,6 @@
 # F1 Stats on Netlify Edge Functions
 
-This is an example data source to retrive our dataset using Netlify Edge Functions.
+This is an example data source to retrieve our dataset using Netlify Edge Functions.
 
 ## Notable things about Netlify
 
