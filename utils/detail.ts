@@ -37,9 +37,19 @@ const CIRCUIT_NAME = {
   'United States Grand Prix': 'Austin',
   'Mexico City Grand Prix': 'Mexico City',
   'Brazilian Grand Prix': 'Sao Paulo',
-  'Abu Dhabi Grand Prix': 'Yas Marina'
+  'Abu Dhabi Grand Prix': 'Yas Marina',
+  'Qatar Grand Prix': 'Qatar',
+  'São Paulo Grand Prix': 'Sao Paulo',
+  'Las Vegas Grand Prix': 'Las Vegas',
 }
 
 export function circuitName(raceName: string): string {
-  return CIRCUIT_NAME[raceName]
+  const name = CIRCUIT_NAME[raceName]
+  if (name) {
+    return name
+  } else {
+    console.error(raceName)
+    console.error("Circuit name not found, update utils/detail.ts")
+    return raceName
+  }
 }
