@@ -234,7 +234,7 @@ const Home: NextPage = () => {
                     <div
                       key={i}
                       className={`relative border-b border-r border-r-gray-50 [border-bottom-style:dashed] dark:border-r-gray-850 ${
-                        i % 21 === selectedRound - 1
+                        i % 25 === selectedRound - 1
                           ? 'border-r-gray-800 after:absolute after:-bottom-2 after:-right-px after:block after:h-2 after:w-px after:bg-gray-800 dark:border-r-gray-100 dark:after:bg-gray-100'
                           : ''
                       }`}
