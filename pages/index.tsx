@@ -158,13 +158,13 @@ const Home: NextPage = () => {
       {data && (
         <>
           <main className='container relative mx-auto overflow-hidden px-3 pb-6 font-brand md:px-6 lg:pr-8'>
-            <div className='dark top-12 left-14 z-1 mb-3 space-y-1 rounded bg-secondary p-1 font-bold text-primary shadow-xl shadow-black/25 supports-bg-blur:bg-black/90 supports-bg-blur:backdrop-blur-sm dark:shadow-black/90 dark:ring-1 dark:ring-white/10 supports-bg-blur:dark:bg-gray-850/60 lg:absolute lg:w-32 lg:p-1.5 xl:w-38 2xl:left-18 2xl:top-14'>
+            <div className='dark top-1/2 right-3 z-1 mb-3 space-y-1 rounded bg-secondary p-1 font-bold text-primary shadow-xl shadow-black/25 supports-bg-blur:bg-black/90 supports-bg-blur:backdrop-blur-sm dark:shadow-black/90 dark:ring-1 dark:ring-white/10 supports-bg-blur:dark:bg-gray-850/60 lg:absolute lg:w-32 lg:-translate-y-1/2 lg:p-1.5 xl:right-12 xl:w-38 2xl:top-14 2xl:right-16'>
               {standings.map((standing, i) => (
                 <StandingsItem key={i} standing={standing} />
               ))}
             </div>
 
-            <div className='grid translate-x-[18px] translate-y-3 grid-cols-26 whitespace-nowrap pt-1 pb-2 text-2xs sm:translate-x-[19px] md:translate-x-[23px] lg:translate-x-[22px] lg:pb-0 xl:translate-x-[34px] 2xl:translate-x-[46px]'>
+            <div className='grid translate-x-[18px] translate-y-3 grid-cols-23 whitespace-nowrap pt-1 pb-2 text-2xs sm:translate-x-[19px] md:translate-x-[23px] lg:translate-x-[22px] lg:pb-0 xl:translate-x-[34px] 2xl:translate-x-[46px]'>
               {raceDates.map((date, i) => (
                 <button
                   key={i}
@@ -190,7 +190,7 @@ const Home: NextPage = () => {
               ))}
             </div>
 
-            <div className='grid grid-cols-26 grid-rows-[7]'>
+            <div className='grid grid-cols-23 grid-rows-[7]'>
               <div className='col-start-1 col-end-2 row-start-1 row-end-[8]'>
                 <div className='border-b border-r border-r-gray-50 pt-8 text-xs text-secondary [border-bottom-style:dashed] dark:border-r-gray-850'>
                   600
@@ -215,26 +215,26 @@ const Home: NextPage = () => {
                 </div>
               </div>
 
-              <div className='col-start-2 col-end-[23] row-start-1 row-end-2'>
-                <div className='grid h-full grid-cols-25'>
-                  {[...Array(21)].map((_, i) => (
+              <div className='col-start-2 col-end-[24] row-start-1 row-end-2'>
+                <div className='grid h-full grid-cols-22'>
+                  {[...Array(22)].map((_, i) => (
                     <div
                       key={i}
                       className={`border-b border-r border-r-gray-50 [border-bottom-style:dashed] dark:border-r-gray-850 ${
-                        i % 21 === selectedRound - 1 ? 'border-r-gray-800 dark:border-r-gray-100' : ''
+                        i % 22 === selectedRound - 1 ? 'border-r-gray-800 dark:border-r-gray-100' : ''
                       }`}
                     />
                   ))}
                 </div>
               </div>
 
-              <div className='relative col-start-2 col-end-[23] row-start-2 row-end-[8]'>
-                <div className='grid h-full grid-cols-25'>
-                  {[...Array(126)].map((_, i) => (
+              <div className='relative col-start-2 col-end-[24] row-start-2 row-end-[8]'>
+                <div className='grid h-full grid-cols-22'>
+                  {[...Array(132)].map((_, i) => (
                     <div
                       key={i}
                       className={`relative border-b border-r border-r-gray-50 [border-bottom-style:dashed] dark:border-r-gray-850 ${
-                        i % 21 === selectedRound - 1
+                        i % 22 === selectedRound - 1
                           ? 'border-r-gray-800 after:absolute after:-bottom-2 after:-right-px after:block after:h-2 after:w-px after:bg-gray-800 dark:border-r-gray-100 dark:after:bg-gray-100'
                           : ''
                       }`}
@@ -248,7 +248,7 @@ const Home: NextPage = () => {
               </div>
             </div>
 
-            <div className='grid grid-cols-26 justify-items-end whitespace-nowrap pt-1 pb-6 text-2xs text-gray-600'>
+            <div className='grid grid-cols-23 justify-items-end whitespace-nowrap pt-1 pb-6 text-2xs text-gray-600'>
               {raceNames.map((name, i) => (
                 <div
                   key={i}
@@ -267,7 +267,7 @@ const Home: NextPage = () => {
           <section className='container mx-auto px-3 pt-2 pb-6 md:px-6'>
             <div className='space-y-1 border-y py-3'>
               <h3 className='text-sm font-semibold'>How this works</h3>
-              <p className='lg:w-3/4'>
+              <p>
                 This is powered by edge functions and a PlanetScale database. Each edge function uses{' '}
                 <a href='https://github.com/planetscale/database-js' className='text-blue'>
                   @planetscale/database
