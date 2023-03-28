@@ -17,7 +17,7 @@ async function fetcher<T>(input: RequestInfo, init?: RequestInit): Promise<T> {
 
 const cloudflareUrl = 'https://f1-championship-stats.mike.workers.dev/data.json'
 // const fastlyUrl = 'https://f1-planetscale.edgecompute.app/data.json'
-const netlifyUrl = 'https://f1-championship-stats.netlify.app/data.json'
+const netlifyUrl = 'https://f1-planetscale.netlify.app/data.json'
 const vercelUrl = 'https://f1-championship-stats-workers.preview.planetscale.com/api/data.json'
 
 const Home: NextPage = () => {

@@ -11,8 +11,9 @@ This is an example data source to retrieve our dataset using Netlify Edge Functi
 
 1. Run `npm install`
 2. Run `npm run dev` to start the app locally.
-3. Run `npm run deploy` to deploy to Netlify.
-4. Run `./node_modules/.bin/netlify env:set DATABASE_URL ...` to configure the database credential needed.
+3. Run `npx netlify build`
+3. Run `npx netlify deploy --prod` to deploy to Netlify.
+4. Run `npx netlify env:set DATABASE_URL ...` to configure the database credential needed.
 
 ## Live endpoint
 
