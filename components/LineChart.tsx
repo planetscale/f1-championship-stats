@@ -65,6 +65,8 @@ const options: any = {
     },
     yAxis: {
       display: false,
+      min: 0,
+      max: 600,
       ticks: {
         maxTicksLimit: 7
       }
