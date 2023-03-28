@@ -17,7 +17,7 @@ async function fetcher<T>(input: RequestInfo, init?: RequestInit): Promise<T> {
 
 const cloudflareUrl = 'https://f1-championship-stats.mike.workers.dev/data.json'
 // const fastlyUrl = 'https://f1-planetscale.edgecompute.app/data.json'
-const netlifyUrl = 'https://f1-championship-stats.netlify.app/data.json'
+const netlifyUrl = 'https://f1-planetscale.netlify.app/data.json'
 const vercelUrl = 'https://f1-championship-stats-workers.preview.planetscale.com/api/data.json'
 
 const Home: NextPage = () => {
@@ -32,6 +32,7 @@ const Home: NextPage = () => {
   const [teams, setTeams] = useState({})
   const [standings, setStandings] = useState([])
   const [lastIndex, setLastIndex] = useState(0)
+  const [maxPoints, setMaxPoints] = useState(100)
 
   useEffect(() => {
     const lastIndex = datasets[0]?.data.length - 1
