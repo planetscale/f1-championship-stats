@@ -32,7 +32,6 @@ const Home: NextPage = () => {
   const [teams, setTeams] = useState({})
   const [standings, setStandings] = useState([])
   const [lastIndex, setLastIndex] = useState(0)
-  const [maxPoints, setMaxPoints] = useState(100)
 
   useEffect(() => {
     const lastIndex = datasets[0]?.data.length - 1
