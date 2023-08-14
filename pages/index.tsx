@@ -124,6 +124,7 @@ const Home: NextPage = () => {
           name='description'
           content='F1 Constructors Championship standings week-by-week. Powered by edge functions and PlanetScale.'
         />
+        <meta name='robots' content='noindex'>
         <link rel='icon' href='/favicon.ico' />
       </Head>
 
