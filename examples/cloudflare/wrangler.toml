@@ -6,7 +6,10 @@ compatibility_date = "2022-07-31"
 crons = [ "0 */1 * * SUN" ]
 
 # The necessary secrets are:
-# - PSCALE_USERNAME
-# - PSCALE_PASSWORD
-# - PSCALE_HOST
+# - DATABASE_USERNAME
+# - DATABASE_PASSWORD
+# - DATABASE_HOST
+# - REPLICA_DATABASE_USERNAME
+# - REPLICA_DATABASE_PASSWORD
+# - REPLICA_DATABASE_HOST
 # Run `echo <VALUE> | wrangler secret put <NAME>` for each of these
