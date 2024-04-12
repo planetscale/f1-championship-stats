@@ -26,10 +26,10 @@ It has two parts: a `cron` that runs to update the database with stats. And a `d
 [vars]
 DATABASE_USERNAME = "USERNAME"
 DATABASE_PASSWORD = "PASSWORD"
-DATABASE_HOST = “REGION.connect.psdb.cloud”
+DATABASE_HOST = “PROVIDER.connect.psdb.cloud”
 REPLICA_DATABASE_USERNAME = "USERNAME"
 REPLICA_DATABASE_PASSWORD = "PASSWORD"
-REPLICA_DATABASE_HOST = “REGION.connect.psdb.cloud”
+REPLICA_DATABASE_HOST = “PROVIDER.connect.psdb.cloud”
 ```
 
 2. Run `npx wrangler dev`
