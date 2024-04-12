@@ -5,7 +5,7 @@ import { connect } from '@planetscale/database'
 addEventListener("fetch", (event) => event.respondWith(app(event)))
 
 fastly.defaultBackend = "psdb"
-const CURRENT_YEAR = 2023
+const CURRENT_YEAR = 2024
 /**
  *
  * @param {FetchEvent} event

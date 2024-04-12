@@ -22,38 +22,9 @@ type Props = {
   chartData: ChartData
 }
 
-const delayBetweenPoints = 25
-
 const options: any = {
-  animation: {
-    x: {
-      type: 'number',
-      easing: 'linear',
-      duration: delayBetweenPoints,
-      from: NaN, // the point is initially skipped
-      delay(ctx) {
-        if (ctx.type !== 'data' || ctx.xStarted) {
-          return 0
-        }
-        ctx.xStarted = true
-        return ctx.index * delayBetweenPoints
-      }
-    },
-    y: {
-      type: 'number',
-      easing: 'linear',
-      duration: delayBetweenPoints,
-      delay(ctx) {
-        if (ctx.type !== 'data' || ctx.yStarted) {
-          return 0
-        }
-        ctx.yStarted = true
-        return ctx.index * delayBetweenPoints
-      }
-    }
-  },
+  animation: false,
   events: [],
-  maintainAspectRatio: false,
   plugins: {
     legend: {
       display: false

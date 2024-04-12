@@ -1,22 +1,40 @@
 const CONSTRUCTOR_COLOR = {
-  alfa: '#A32F3C',
-  alphatauri: '#587B98',
-  alpine: '#4891CC',
-  aston_martin: '#46806E',
-  ferrari: '#ED1D25',
-  haas: '#B7B9BC',
-  mclaren: '#E6863B',
-  mercedes: '#6BD4BF',
-  red_bull: '#2F5ABF',
-  williams: '#63BBD9'
+  alpine: '#FF87BC',
+  aston_martin: '#229971',
+  ferrari: '#E8002D',
+  haas: '#B6BABD',
+  mclaren: '#FF8000',
+  mercedes: '#27F4D2',
+  rb: '#6692FF',
+  red_bull: '#3671C6',
+  sauber: '#52E252',
+  williams: '#64C4FF'
 }
 
 export function constructorColor(constructorId: string): string {
   return CONSTRUCTOR_COLOR[constructorId]
 }
 
+const CONSTRUCTOR_NAME = {
+  alpine: 'Alpine',
+  aston_martin: 'Aston Martin',
+  ferrari: 'Ferrari',
+  haas: 'Haas',
+  mclaren: 'McLaren',
+  mercedes: 'Mercedes',
+  rb: 'VCARB',
+  red_bull: 'Red Bull',
+  sauber: 'Kick Sauber',
+  williams: 'Williams'
+}
+
+export function constructorName(constructorId: string): string {
+  return CONSTRUCTOR_NAME[constructorId]
+}
+
 const CIRCUIT_NAME = {
   'Bahrain Grand Prix': 'Bahrain',
+  'Chinese Grand Prix': 'Shanghai',
   'Saudi Arabian Grand Prix': 'Jeddah',
   'Australian Grand Prix': 'Melbourne',
   'Emilia Romagna Grand Prix': 'Imola',
@@ -40,7 +58,7 @@ const CIRCUIT_NAME = {
   'Abu Dhabi Grand Prix': 'Yas Marina',
   'Qatar Grand Prix': 'Qatar',
   'São Paulo Grand Prix': 'Sao Paulo',
-  'Las Vegas Grand Prix': 'Las Vegas',
+  'Las Vegas Grand Prix': 'Las Vegas'
 }
 
 export function circuitName(raceName: string): string {
@@ -49,7 +67,7 @@ export function circuitName(raceName: string): string {
     return name
   } else {
     console.error(raceName)
-    console.error("Circuit name not found, update utils/detail.ts")
+    console.error('Circuit name not found, update utils/detail.ts')
     return raceName
   }
 }

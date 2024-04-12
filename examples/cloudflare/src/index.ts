@@ -1,12 +1,15 @@
-import { connect, Connection, ExecutedQuery } from '@planetscale/database'
+import { Client, Connection, ExecutedQuery, connect } from '@planetscale/database'
 
 export interface Env {
-  PSCALE_HOST: string
-  PSCALE_USERNAME: string
-  PSCALE_PASSWORD: string
+  DATABASE_HOST: string
+  DATABASE_USERNAME: string
+  DATABASE_PASSWORD: string
+  REPLICA_DATABASE_HOST: string
+  REPLICA_DATABASE_USERNAME: string
+  REPLICA_DATABASE_PASSWORD: string
 }
 
-const CURRENT_YEAR = 2023
+const CURRENT_YEAR = 2024
 
 const Worker = {
   async fetch(request: Request, env: Env, _ctx: ExecutionContext): Promise<Response> {
@@ -14,20 +17,28 @@ const Worker = {
     const pathname = url.pathname
 
     const config = {
-      host: env.PSCALE_HOST,
-      username: env.PSCALE_USERNAME,
-      password: env.PSCALE_PASSWORD
+      host: env.REPLICA_DATABASE_HOST,
+      username: env.REPLICA_DATABASE_USERNAME,
+      password: env.REPLICA_DATABASE_PASSWORD,
+      fetch: (url: string, init: RequestInit<RequestInitCfProperties>) => {
+        delete (init as any)['cache']
+        return fetch(url, init)
+      }
     }
 
     if (pathname === '/data.json') {
-      const conn = connect(config)
+      const client = new Client(config)
+
       const [resultsData, raceData, standingsData] = await Promise.all([
-        conn.execute(
+        client.execute(
           'SELECT constructor_standings.round, race_name, teamId, name, nationality, url, position, points FROM constructor_standings JOIN constructor_teams ON constructor_standings.teamId = constructor_teams.id JOIN constructor_races on (constructor_standings.season = constructor_races.season AND constructor_standings.round = constructor_races.round) where constructor_standings.season = ? order by constructor_standings.round',
           [CURRENT_YEAR]
         ),
-        conn.execute('SELECT * FROM constructor_races WHERE season = ? ORDER BY date', [CURRENT_YEAR]),
-        conn.execute('SELECT constructor_standings.season, teamId, name, position, points, wins FROM constructor_standings JOIN constructor_teams on (constructor_standings.teamId = constructor_teams.id) WHERE season = ? and round = (select max(round) from constructor_standings where season = ?) order by position', [CURRENT_YEAR, CURRENT_YEAR])
+        client.execute('SELECT * FROM constructor_races WHERE season = ? ORDER BY date', [CURRENT_YEAR]),
+        client.execute(
+          'SELECT constructor_standings.season, teamId, name, position, points, wins FROM constructor_standings JOIN constructor_teams on (constructor_standings.teamId = constructor_teams.id) WHERE season = ? and round = (select max(round) from constructor_standings where season = ?) order by position',
+          [CURRENT_YEAR, CURRENT_YEAR]
+        )
       ])
 
       const data = { races: raceData.rows, results: resultsData.rows, standings: standingsData.rows }
@@ -50,9 +61,9 @@ const Worker = {
   // Grabs latest F1 standings from the Ergast API and writes them to the database.
   async scheduled(controller: ScheduledController, env: Env, ctx: ExecutionContext): Promise<void> {
     const config = {
-      host: env.PSCALE_HOST,
-      username: env.PSCALE_USERNAME,
-      password: env.PSCALE_PASSWORD
+      host: env.DATABASE_HOST,
+      username: env.DATABASE_USERNAME,
+      password: env.DATABASE_PASSWORD
     }
 
     const conn = connect(config)
