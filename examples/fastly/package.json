@@ -6,7 +6,7 @@
         "dev": "fastly compute serve"
     },
     "devDependencies": {
-        "@fastly/js-compute": "^0.5.1",
+        "@fastly/js-compute": "^0.5.3",
         "esbuild": "^0.15.5"
     },
     "dependencies": {
